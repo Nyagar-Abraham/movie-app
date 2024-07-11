@@ -43,26 +43,25 @@ export interface GetTvShowsParams {
 	pageSize?: number;
 }
 
-export interface createUserParams{
+export interface createUserParams {
 	name: string;
 	username: string;
 	email: string;
 	clerkId: string;
 	picture: string;
 }
-export interface updateUserParams{
+export interface updateUserParams {
 	clerkId: string;
 	updateData: {
 		name: string;
 		username: string;
 		email: string;
-	
+
 		picture: string;
 	};
 	path: string;
 }
 
-
-export interface deleteUserParams{
+export interface deleteUserParams {
 	clerkId: string;
 }
