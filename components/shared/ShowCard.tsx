@@ -42,10 +42,9 @@ const Trending = ({
 				<Image
 					src={thumbnail?.substring(1)}
 					alt={`${title} thumbnail`}
-					className="object-cover"
+					className="object-cover transition-all duration-500 hover:scale-[1.1]"
 					width={470}
 					height={230}
-					className="transition-all duration-500 hover:scale-[1.1]"
 				/>
 				<Play width={20} height={20} open={open} />
 			</div>
