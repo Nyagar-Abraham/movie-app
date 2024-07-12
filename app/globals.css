@@ -105,9 +105,9 @@
 	}
 
 	.paragraph {
-		@apply text-[15px] text-l-blue dark:text-l-blue;
+		@apply text-[15px] text-slate-600 dark:text-l-blue;
 	}
-	.paragraph {
-		@apply text-[13px] text-d-blue/70;
+	.paragraph-small {
+		@apply text-[13px] text-slate-400;
 	}
 }

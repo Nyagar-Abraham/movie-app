@@ -8,6 +8,10 @@ import Trending from '@/components/Trending';
 import ShowCard from '@/components/shared/ShowCard';
 import Pagination from '../../../components/shared/Pagination';
 import Sort from '@/components/shared/Sort';
+import { sortArray } from '@/constants';
+import Slider from '@/components/home/Slider';
+import { getRandomPastDate } from '@/lib/utils';
+import Heading from '@/components/home/heading';
 
 export default async function Home({ params, searchParams }: any) {
 	// Define the path to the JSON file
@@ -17,13 +21,15 @@ export default async function Home({ params, searchParams }: any) {
 	const jsonData = fs.readFileSync(filePath, 'utf-8');
 
 	// Parse the JSON data
-	const data = JSON.parse(jsonData);
+	// const data = JSON.parse(jsonData);
 
 	// let titles: any = [];
 
 	// const newData = data.map((d: any) => {
 	// 	if (!titles.includes(d.title)) {
-	// 		titles.push(data.title);
+	// 		titles.push(d.title);
+	// 		d.views = [];
+	// 		d.year = getRandomPastDate();
 
 	// 		return d;
 	// 	}
@@ -39,6 +45,8 @@ export default async function Home({ params, searchParams }: any) {
 		getAllShow({
 			page: searchParams?.page ? searchParams?.page : 1,
 			pageSize: 12,
+			searchQuery: searchParams?.filter || '',
+			sortBy: searchParams?.sort || '',
 		}),
 	]);
 
@@ -48,13 +56,11 @@ export default async function Home({ params, searchParams }: any) {
 		<>
 			<div className="mt-8 flex items-center flex-wrap gap-x-3 gap-y-5">
 				<Search placeholder="Search for movies and TV shows" />
-				<Sort />
+				<Sort sorts={sortArray} />
 			</div>
-
-			<h1 className="h-primary mt-8 ">Trending</h1>
-
+			<Heading />
 			<div className=" mt-3 overflow-x-auto whitespace-no-wrap  scrollbar-hidden">
-				<div className="flex  space-x-4  min-w-full">
+				<Slider>
 					{trendingShows?.length > 0 &&
 						trendingShows.map((show: any) => (
 							<Trending
@@ -68,11 +74,9 @@ export default async function Home({ params, searchParams }: any) {
 								year={show.year}
 							/>
 						))}
-				</div>
+				</Slider>
 			</div>
-
 			<h1 className="h-primary mt-8 ">Recommended for you</h1>
-
 			<div className="mt-3 grid grid-cols-2 gap-4 md:grid-cols-3 md:gap-y-6 md:gap-x-5 lg:grid-cols-4 ">
 				{recommendedShows.length > 0 &&
 					recommendedShows.map((show: any) => (
@@ -88,7 +92,6 @@ export default async function Home({ params, searchParams }: any) {
 						/>
 					))}
 			</div>
-
 			<Pagination
 				page={searchParams?.page ? +searchParams?.page : 1}
 				isNext={isNext}

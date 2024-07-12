@@ -3,17 +3,22 @@ import { getMovies } from '@/lib/actions/show.action';
 
 import ShowCard from '@/components/shared/ShowCard';
 import Pagination from '@/components/shared/Pagination';
+import Sort from '@/components/shared/Sort';
+import { sortArray } from '@/constants';
 
 export default async function Page({ params, searchParams }: any) {
 	const { movies, isNext, pages } = await getMovies({
 		page: searchParams?.page ? +searchParams?.page : 1,
 		pageSize: 12,
+		searchQuery: searchParams?.filter || '',
+		sortBy: searchParams?.sort || '',
 	});
 
 	return (
 		<>
-			<div className="mt-8 flex">
+			<div className="mt-8 flex items-center flex-wrap gap-x-3 gap-y-5">
 				<Search placeholder="Search for movies and TV shows" />
+				<Sort sorts={sortArray} />
 			</div>
 
 			<h1 className="h-primary mt-8 ">Movies</h1>

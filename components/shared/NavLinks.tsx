@@ -4,6 +4,8 @@ import { Links } from '@/constants';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { FaCalendarCheck, FaUser, FaUsers } from 'react-icons/fa';
+import { FaPeopleGroup } from 'react-icons/fa6';
 
 const NavLinks = () => {
 	const pathname = usePathname();
@@ -17,13 +19,25 @@ const NavLinks = () => {
 
 				return (
 					<Link key={link.label} href={link.href}>
-						<Image
-							src={link.icon}
-							width={16}
-							height={16}
-							alt={link.label}
-							className={`${active ? '  filter-white' : ''}  `}
-						/>
+						{link.icon === '' ? (
+							link?.label === 'community' ? (
+								<FaPeopleGroup
+									className={` ${active ? 'text-slate-300' : 'text-[#5A698F]'}`}
+								/>
+							) : (
+								<FaCalendarCheck
+									className={` ${active ? 'text-slate-300' : 'text-[#5A698F]'}`}
+								/>
+							)
+						) : (
+							<Image
+								src={link.icon}
+								width={16}
+								height={16}
+								alt={link.label}
+								className={`${active ? '  filter-white' : ''}  `}
+							/>
+						)}
 					</Link>
 				);
 			})}

@@ -6,6 +6,14 @@ export function cn(...inputs: ClassValue[]) {
 	return twMerge(clsx(inputs));
 }
 
+export function formatDate(date: Date): string {
+	const year = date.getFullYear();
+	const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Months are zero-based, so we add 1
+	const day = date.getDate().toString().padStart(2, '0');
+
+	return `${year}-${month}-${day}`;
+}
+
 interface UrlQueryParams {
 	params: string;
 	key: string;
@@ -48,3 +56,12 @@ export const removeUrlQuery = ({
 		{ skipNull: true }
 	);
 };
+
+
+export function getRandomPastDate(): Date {
+	const currentDate = new Date();
+	const past25YearsInMilliseconds = 25 * 365 * 24 * 60 * 60 * 1000; // 25 years in milliseconds
+	const randomMillisecondsInPast = Math.floor(Math.random() * past25YearsInMilliseconds);
+	const randomPastDate = new Date(currentDate.getTime() - randomMillisecondsInPast);
+	return randomPastDate;
+}

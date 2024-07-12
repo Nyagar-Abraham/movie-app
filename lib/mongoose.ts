@@ -1,6 +1,5 @@
+import User from '@/database/user.model';
 import mongoose from 'mongoose';
-import app from 'next/app';
-import { connected } from 'process';
 
 let isConnected: boolean = false;
 
@@ -17,10 +16,17 @@ export const connectToDatabase = async () => {
 
 	try {
 		await mongoose.connect(process.env.NEXT_PUBLIC_MONGODB_URL, {
-			dbName: 'movie-app',
+			dbName: 'movie',
 		});
 
 		isConnected = true;
+		// await User.updateMany(
+		// 	{},
+		// 	{
+		// 		$set: { interactions: [] },
+		// 	}
+		// );
+		// console.log('update field');
 
 		console.log('mongodb connected');
 	} catch (error) {

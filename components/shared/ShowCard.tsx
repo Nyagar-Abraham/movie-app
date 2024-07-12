@@ -35,7 +35,7 @@ const Trending = ({
 		<Link
 			onMouseEnter={() => setOpen(true)}
 			onMouseLeave={() => setOpen(false)}
-			href={`${category === 'Movie' ? `/movie/${id}` : `/tv-series/${_id}`}`}
+			href={`${category === 'Movie' ? `/movie/${id}` : `/tv-series/${id}`}`}
 			className="relative flex-1 inline-block flex-none rounded-md overflow-hidden flex flex-col gap-2 shadow-sm"
 		>
 			<div className="overflow-hidden relative">

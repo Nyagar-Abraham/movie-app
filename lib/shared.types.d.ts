@@ -29,18 +29,32 @@ export interface ShowInterface {
 export interface GetAllShowsParams {
 	page?: number;
 	pageSize?: number;
+	searchQuery?: string;
+	sortBy?: string;
+}
+export interface GetAllUsersParams {
+	page?: number;
+	pageSize?: number;
+	searchQuery?: string;
+	sortBy?: string;
 }
 export interface GetBookmarkedShowsParams {
 	page?: number;
 	pageSize?: number;
+	searchQuery?: string;
+	sortBy?: string;
 }
 export interface GetMoviesParams {
 	page?: number;
 	pageSize?: number;
+	searchQuery?: string;
+	sortBy?: string;
 }
 export interface GetTvShowsParams {
 	page?: number;
 	pageSize?: number;
+	searchQuery?: string;
+	sortBy?: string;
 }
 
 export interface createUserParams {
@@ -53,15 +67,39 @@ export interface createUserParams {
 export interface updateUserParams {
 	clerkId: string;
 	updateData: {
-		name: string;
-		username: string;
-		email: string;
-
-		picture: string;
+		name?: string;
+		username?: string;
+		email?: string;
+		location?: string;
+		picture?: string;
 	};
-	path: string;
+	path?: string;
 }
 
 export interface deleteUserParams {
 	clerkId: string;
+}
+export interface getTvSeriesByIdParams {
+	seriesId: string;
+}
+export interface voteParams {
+	userId: string;
+	showId: string;
+	hasUpvoted: boolean;
+	hasDownvoted: boolean;
+	path?: string | undefined;
+}
+
+export interface updateViewsParams {
+	userId: string;
+	showId: string;
+	path: string;
+}
+export interface  getUserInteractionParams{
+	userId: string;
+	page?: number;
+	pageSize?: number;
+	searchQuery?: string;
+	sortBy?:string
+	
 }

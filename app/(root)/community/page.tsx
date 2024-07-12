@@ -1,13 +1,12 @@
 import Search from '@/components/shared/Input';
-import { getTvShows } from '@/lib/actions/show.action';
-
-import ShowCard from '@/components/shared/ShowCard';
 import Pagination from '@/components/shared/Pagination';
 import Sort from '@/components/shared/Sort';
-import { sortArray } from '@/constants';
+import UserCard from '@/components/user/UserCard';
+import { sortArray, usersortArray } from '@/constants';
+import { getAllUsers } from '@/lib/actions/user.actions';
 
-export default async function Page({ params, searchParams }: any) {
-	const { series, isNext, pages } = await getTvShows({
+const page = async ({ params, searchParams }: any) => {
+	const { users, isNext, pages } = await getAllUsers({
 		page: searchParams?.page ? searchParams?.page : 1,
 		pageSize: 12,
 		searchQuery: searchParams?.filter || '',
@@ -18,23 +17,23 @@ export default async function Page({ params, searchParams }: any) {
 		<>
 			<div className="mt-8 flex items-center flex-wrap gap-x-3 gap-y-5">
 				<Search placeholder="Search for movies and TV shows" />
-				<Sort sorts={sortArray} />
+				<Sort sorts={usersortArray} />
 			</div>
 
-			<h1 className="h-primary mt-8 ">TV shows</h1>
+			<h1 className="h-primary mt-8 ">Community</h1>
 
 			<div className="mt-3 grid grid-cols-2 gap-4 md:grid-cols-3 md:gap-y-6 md:gap-x-5 lg:grid-cols-4 ">
-				{series.length > 0 &&
-					series.map((show) => (
-						<ShowCard
-							key={show._id}
-							_id={JSON.stringify(show._id)}
-							title={show.title}
-							thumbnail={show.thumbnail.regular.small}
-							rating={show.rating}
-							category={show.category}
-							isBookmarked={show.isBookmarked}
-							year={show.year}
+				{users?.length > 0 &&
+					users.map((user) => (
+						<UserCard
+							key={user._id}
+							_id={JSON.stringify(user._id)}
+							name={user.name}
+							username={user.username}
+							location={user?.location}
+							likedShows={user.likedshows?.length || 0}
+							picture={user.picture}
+							email={user.email}
 						/>
 					))}
 			</div>
@@ -46,4 +45,6 @@ export default async function Page({ params, searchParams }: any) {
 			/>
 		</>
 	);
-}
+};
+
+export default page;

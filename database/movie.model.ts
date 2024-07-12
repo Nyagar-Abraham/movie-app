@@ -25,6 +25,7 @@ export interface IShow extends Document {
 		user: Schema.Types.ObjectId;
 		rating: number;
 	}[];
+	views?: Schema.Types.ObjectId[];
 }
 
 const thumbnailSchema = new Schema(
@@ -59,8 +60,12 @@ const showSchema = new Schema<IShow>({
 			rating: { type: Number },
 		},
 	],
+	views: [{ type: Schema.Types.ObjectId, ref: 'User' }],
 });
 
-const Show = models.Show || model<IShow>('Show', showSchema);
+// Create text indexes on title and description for efficient text search
+showSchema.index({ title: 'text', description: 'text' });
+
+const Show = models?.Show || model<IShow>('Show', showSchema);
 
 export default Show;

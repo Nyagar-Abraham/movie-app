@@ -11,7 +11,22 @@ export const Links = [
 		icon: '/assets/icon-nav-bookmark.svg',
 		label: 'bookmark',
 	},
+	{
+		href: '/community',
+		icon: '',
+		label: 'community',
+	},
+	{
+		href: '/history',
+		icon: '',
+		label: 'history',
+	},
 ];
 
 export const themes = ['dark', 'light', 'system'];
-export const sorts = ['popular', 'latest', 'old', 'adult', 'general'];
+export const sortArray = ['popular', 'latest', 'old'];
+export const InteractionSortArray = ['oldest'];
+export const usersortArray = ['most active', 'name'];
+// export const sorts = ['popular', 'latest', 'old', 'adult', 'general'];
+// export const sorts = ['popular', 'latest', 'old', 'adult', 'general'];
+export const ratingMessage = ['Terrible', 'Bad', 'Okay', 'Good', 'Amazing'];

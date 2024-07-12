@@ -36,7 +36,7 @@ export default function RootLayout({
 			}}
 		>
 			<html lang="en">
-				<body className={`text-center ${inter.className}`}>
+				<body className={` ${inter.className}`}>
 					<ThemeProvider>{children}</ThemeProvider>
 				</body>
 			</html>

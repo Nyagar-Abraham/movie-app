@@ -17,13 +17,6 @@ const Navbar = () => {
 			/>
 			<NavLinks />
 			<div className="flex gap-4 items-center md:flex-col">
-				{/* <Image
-					src="/assets/image-avatar.png"
-					width={24}
-					height={24}
-					alt="logo"
-					className="object-contain rounded-full border border-l-blue md:mt-auto"
-				/> */}
 				<div className="flex-center md:flex-col gap-2 ">
 					<SignedIn>
 						<UserButton />
@@ -32,9 +25,6 @@ const Navbar = () => {
 						<Link href="/sign-in">
 							<FaSignInAlt className="text-red/80" />
 						</Link>
-						{/* <Link href="/sign-in" className="">
-							
-						</Link> */}
 					</SignedOut>
 				</div>
 				<Theme />
