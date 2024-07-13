@@ -2,7 +2,7 @@ import { SignUp } from '@clerk/nextjs';
 
 export default function Page() {
 	return (
-		<div className="flex-center mt-10 ">
+		<div className="flex-center mt-10 md:mt-10 ">
 			<SignUp
 				appearance={{
 					elements: {
