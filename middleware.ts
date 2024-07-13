@@ -5,7 +5,7 @@ const isPublicRoute = createRouteMatcher([
 	'/tv-series',
 	'/movies',
 	'/bookmark',
-
+	'/api/webhooks',
 	'/sign-in(.*)',
 	'/sign-up(.*)',
 ]);
