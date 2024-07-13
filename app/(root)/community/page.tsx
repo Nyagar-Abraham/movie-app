@@ -3,7 +3,7 @@ import NoResult from '@/components/shared/NoResult';
 import Pagination from '@/components/shared/Pagination';
 import Sort from '@/components/shared/Sort';
 import UserCard from '@/components/user/UserCard';
-import { sortArray, usersortArray } from '@/constants';
+import { usersortArray } from '@/constants';
 import { getAllUsers, getUserByClerkId } from '@/lib/actions/user.actions';
 import { auth } from '@clerk/nextjs/server';
 import { Metadata } from 'next';
@@ -16,7 +16,9 @@ export const metadata: Metadata = {
 const page = async ({ params, searchParams }: any) => {
 	const { userId } = auth();
 
-	const user = await getUserByClerkId({ clerkId: userId! });
+	if (!userId) return null;
+
+	const user = (await getUserByClerkId({ clerkId: userId! })) || {};
 	const { users, isNext, pages } = await getAllUsers({
 		page: searchParams?.page ? searchParams?.page : 1,
 		pageSize: 12,
