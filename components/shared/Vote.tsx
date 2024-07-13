@@ -58,7 +58,8 @@ export function Vote({
 
 			toast({
 				title: `Upvote successfull ${!upvote ? 'added' : 'removed'} `,
-				variant: !upvote ? 'success' : 'destructive',
+
+				variant: !upvote ? 'default' : 'destructive',
 			});
 		} else {
 			setDownvote((d) => !d);
@@ -72,7 +73,7 @@ export function Vote({
 
 			toast({
 				title: `downvote successfull ${!downvote ? 'added' : 'removed'} `,
-				variant: !downvote ? 'success' : 'destructive',
+				variant: !downvote ? 'default' : 'destructive',
 				className: 'toast-success',
 			});
 		}
