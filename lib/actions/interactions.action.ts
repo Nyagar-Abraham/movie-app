@@ -10,7 +10,7 @@ export async function getUserInterActions(params: getUserInteractionParams) {
 	try {
 		connectToDatabase();
 
-		const { page, pageSize, userId, searchQuery, sortBy } = params;
+		const { page, pageSize = 12, userId, searchQuery, sortBy } = params;
 		// @ts-ignore
 		const skipAmount = (page - 1) * pageSize;
 
@@ -42,7 +42,7 @@ export async function getUserInterActions(params: getUserInteractionParams) {
 				path: 'user',
 				model: User,
 				select: 'picture',
-			})
+			}) // @ts-ignore
 			.sort(sortOptions)
 			.skip(skipAmount)
 			.limit(pageSize);
