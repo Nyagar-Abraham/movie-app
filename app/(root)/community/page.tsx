@@ -1,11 +1,21 @@
 import Search from '@/components/shared/Input';
+import NoResult from '@/components/shared/NoResult';
 import Pagination from '@/components/shared/Pagination';
 import Sort from '@/components/shared/Sort';
 import UserCard from '@/components/user/UserCard';
 import { sortArray, usersortArray } from '@/constants';
-import { getAllUsers } from '@/lib/actions/user.actions';
+import { getAllUsers, getUserByClerkId } from '@/lib/actions/user.actions';
+import { auth } from '@clerk/nextjs/server';
+import { Metadata } from 'next';
+import Link from 'next/link';
+
+export const metadata: Metadata = {
+	title: 'Community',
+};
 
 const page = async ({ params, searchParams }: any) => {
+	const { userId } = auth();
+	const user = await getUserByClerkId({ clerkId: userId! });
 	const { users, isNext, pages } = await getAllUsers({
 		page: searchParams?.page ? searchParams?.page : 1,
 		pageSize: 12,
@@ -19,11 +29,18 @@ const page = async ({ params, searchParams }: any) => {
 				<Search placeholder="Search for movies and TV shows" />
 				<Sort sorts={usersortArray} />
 			</div>
-
-			<h1 className="h-primary mt-8 ">Community</h1>
+			<div className="mt-8 flex justify-between items-center">
+				<h1 className="h-primary">Community</h1>
+				<Link
+					className="py-1 text-sm bg-dark90-light10 px-3 rounded-md "
+					href={`/profile/${user._id}`}
+				>
+					update Profile
+				</Link>
+			</div>
 
 			<div className="mt-3 grid grid-cols-2 gap-4 md:grid-cols-3 md:gap-y-6 md:gap-x-5 lg:grid-cols-4 ">
-				{users?.length > 0 &&
+				{users?.length > 0 ? (
 					users.map((user) => (
 						<UserCard
 							key={user._id}
@@ -35,7 +52,10 @@ const page = async ({ params, searchParams }: any) => {
 							picture={user.picture}
 							email={user.email}
 						/>
-					))}
+					))
+				) : (
+					<NoResult search={'Community'} />
+				)}
 			</div>
 
 			<Pagination

@@ -43,16 +43,16 @@ const Pagination = ({ page, isNext, pages }: Props) => {
 	if (page === 1 && !isNext) return null;
 
 	return (
-		<div className="mt-8 flex gap-4 items-center justify-center">
+		<div className="mt-16 flex gap-4 items-center justify-center">
 			<button
 				disabled={curPage === 1}
-				className={`h-[30px] w-[30px] rounded-lg bg-red flex-center hover:text-red hover:bg-pure-white ${page === 1 && 'cursor-not-allowed'}`}
+				className={`dark:text-rose-100 text-slate-800 h-[36px] w-[36px] rounded-lg bg-gradient-to-br from-slate-300 to-slate-100 dark:from-rose-800 dark:to-slate-700  flex-center hover:text-red   flex-center hover:bg-pure-white ${page === 1 && 'cursor-not-allowed'}`}
 				onClick={() => handlePage('prev')}
 			>
 				<FaAnglesLeft />
 			</button>
 
-			<p className="bg-gradient-to-r from-red to-red/70 px-4 py-1 rounded-lg text-pure-white flex gap-1 ">
+			<p className="bg-gradient-to-br  from-slate-300 to-slate-100 dark:from-rose-800 dark:to-slate-700  flex-center   px-6 py-2 rounded-lg dark:text-pure-white text-slate-800 flex gap-1 ">
 				page
 				<span className="font-semibold">{page}</span>
 				of
@@ -61,7 +61,7 @@ const Pagination = ({ page, isNext, pages }: Props) => {
 
 			<button
 				disabled={!isNext}
-				className={`h-[30px] w-[30px] rounded-lg bg-red flex-center hover:text-red hover:bg-pure-white ${!isNext && 'cursor-not-allowed'}`}
+				className={`dark:text-rose-100 text-slate-800  h-[36px] w-[36px] rounded-lg bg-gradient-to-br  from-slate-300 to-slate-100 dark:from-rose-800 dark:to-slate-700  flex-center hover:text-red hover:bg-pure-white ${!isNext && 'cursor-not-allowed'}`}
 				onClick={() => handlePage('next')}
 			>
 				<FaAnglesRight />

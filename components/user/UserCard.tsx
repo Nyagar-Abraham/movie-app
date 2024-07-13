@@ -23,10 +23,7 @@ const UserCard = ({
 }: Props) => {
 	const id = JSON.parse(_id);
 	return (
-		<Link
-			href={`/profile/${id}`}
-			className="rounded-lg bg-gradient-to-b dark:from-dark dark:to-rose-950 from-slate-200 to-slate-100 shadow-sm px-4 py-4 border-t dark:border-dark-blue  "
-		>
+		<div className="rounded-lg bg-gradient-to-b dark:from-dark dark:to-rose-950 from-slate-200 to-slate-100 shadow-sm px-4 py-4 border-t dark:border-dark-blue  ">
 			<div className="flex-center">
 				<Image
 					src={picture}
@@ -44,7 +41,7 @@ const UserCard = ({
 				<Paragraph field="location" value={location || 'Not disclosed'} />
 				<Paragraph field="likedshows" value={likedShows || 0} />
 			</div>
-		</Link>
+		</div>
 	);
 };
 

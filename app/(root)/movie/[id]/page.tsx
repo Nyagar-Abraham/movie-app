@@ -7,6 +7,11 @@ import { formatDate } from '@/lib/utils';
 import { auth } from '@clerk/nextjs/server';
 import Image from 'next/image';
 
+export async function generateMetadata({ params }: any) {
+	const movie = await getMovieById({ movieId: params.id });
+	return { title: `${movie.title} ` };
+}
+
 const page = async ({ params }: any) => {
 	const { userId } = auth();
 	const user = await getUserByClerkId({ clerkId: userId! });

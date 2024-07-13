@@ -6,11 +6,16 @@ import { formatDate } from '@/lib/utils';
 import { auth } from '@clerk/nextjs/server';
 import Image from 'next/image';
 
+export async function generateMetadata({ params }: any) {
+	const series = await getTvSeriesById({ seriesId: params.id });
+	return { title: `${series.title} ` };
+}
+
 const page = async ({ params }: any) => {
 	const { userId } = auth();
 	const user = await getUserByClerkId({ clerkId: userId! });
 
-	const movie = await getTvSeriesById({ seriesId: params.id });
+	const series = await getTvSeriesById({ seriesId: params.id });
 
 	const {
 		thumbnail: {
@@ -24,7 +29,7 @@ const page = async ({ params }: any) => {
 		views,
 		userrattings,
 		_id,
-	} = movie;
+	} = series;
 	return (
 		<>
 			<div className="mt-8">

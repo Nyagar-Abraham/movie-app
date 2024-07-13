@@ -58,7 +58,7 @@ export async function getAllShow(params: GetAllShowsParams) {
 			};
 		}
 
-		let sortOptions = { createdAt: -1 };
+		let sortOptions = { year: -1 };
 		if (sortBy) {
 			switch (sortBy) {
 				case 'popular':
@@ -66,10 +66,10 @@ export async function getAllShow(params: GetAllShowsParams) {
 					sortOptions = { viewsCount: -1, upvotes: -1 };
 					break;
 				case 'latest':
-					sortOptions = { createdAt: -1 };
+					sortOptions = { year: -1 };
 					break;
 				case 'old':
-					sortOptions = { createdAt: 1 };
+					sortOptions = { year: 1 };
 					break;
 				default:
 					break;
@@ -129,7 +129,7 @@ export async function getMovies(params: GetMoviesParams) {
 			// };
 		}
 
-		let sortOptions = { createdAt: -1 };
+		let sortOptions = { year: -1 };
 		if (sortBy) {
 			switch (sortBy) {
 				case 'popular':
@@ -137,10 +137,10 @@ export async function getMovies(params: GetMoviesParams) {
 					sortOptions = { viewsCount: -1, upvotes: -1 };
 					break;
 				case 'latest':
-					sortOptions = { createdAt: -1 };
+					sortOptions = { year: -1 };
 					break;
 				case 'old':
-					sortOptions = { createdAt: 1 };
+					sortOptions = { year: 1 };
 					break;
 				default:
 					break;
@@ -199,7 +199,7 @@ export async function getTvShows(params: GetTvShowsParams) {
 			};
 		}
 
-		let sortOptions = { createdAt: -1 };
+		let sortOptions = { year: -1 };
 		if (sortBy) {
 			switch (sortBy) {
 				case 'popular':
@@ -207,10 +207,10 @@ export async function getTvShows(params: GetTvShowsParams) {
 					sortOptions = { viewsCount: -1, upvotes: -1 };
 					break;
 				case 'latest':
-					sortOptions = { createdAt: -1 };
+					sortOptions = { year: -1 };
 					break;
 				case 'old':
-					sortOptions = { createdAt: 1 };
+					sortOptions = { year: 1 };
 					break;
 				default:
 					break;
@@ -264,7 +264,7 @@ export async function getBookMarkedShows(params: GetBookmarkedShowsParams) {
 			};
 		}
 
-		let sortOptions = { createdAt: -1 };
+		let sortOptions = { year: -1 };
 		if (sortBy) {
 			switch (sortBy) {
 				case 'popular':
@@ -272,10 +272,10 @@ export async function getBookMarkedShows(params: GetBookmarkedShowsParams) {
 					sortOptions = { viewsCount: -1, upvotes: -1 };
 					break;
 				case 'latest':
-					sortOptions = { createdAt: -1 };
+					sortOptions = { year: -1 };
 					break;
 				case 'old':
-					sortOptions = { createdAt: 1 };
+					sortOptions = { year: 1 };
 					break;
 				default:
 					break;
@@ -372,9 +372,9 @@ export async function upvoteShow(params: voteParams) {
 		});
 
 		//add the interation to user
-		// await User.findByIdAndUpdate(userId, {
-		// 	$addToSet: { interactions: action._id },
-		// });
+		await User.findByIdAndUpdate(userId, {
+			$addToSet: { interactions: action._id },
+		});
 		// @ts-ignore
 		revalidatePath(path);
 	} catch (error) {
@@ -420,9 +420,9 @@ export async function downvoteShow(params: voteParams) {
 		});
 
 		//add the interation to user
-		// await User.findByIdAndUpdate(userId, {
-		// 	$addToSet: { interactions: action._id },
-		// });
+		await User.findByIdAndUpdate(userId, {
+			$addToSet: { interactions: action._id },
+		});
 		// @ts-ignore
 		revalidatePath(path);
 	} catch (error) {
@@ -447,9 +447,9 @@ export async function updateViews(params: updateViewsParams) {
 		});
 
 		//add the interation to user
-		// await User.findByIdAndUpdate(userId, {
-		// 	$addToSet: { interactions: action._id },
-		// });
+		await User.findByIdAndUpdate(userId, {
+			$addToSet: { interactions: action._id },
+		});
 
 		revalidatePath(path);
 	} catch (error) {

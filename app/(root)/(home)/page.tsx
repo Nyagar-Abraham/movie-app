@@ -12,6 +12,12 @@ import { sortArray } from '@/constants';
 import Slider from '@/components/home/Slider';
 import { getRandomPastDate } from '@/lib/utils';
 import Heading from '@/components/home/heading';
+import { Metadata } from 'next';
+import NoResult from '@/components/shared/NoResult';
+
+export const metadata: Metadata = {
+	title: 'All Shows',
+};
 
 export default async function Home({ params, searchParams }: any) {
 	// Define the path to the JSON file
@@ -78,7 +84,7 @@ export default async function Home({ params, searchParams }: any) {
 			</div>
 			<h1 className="h-primary mt-8 ">Recommended for you</h1>
 			<div className="mt-3 grid grid-cols-2 gap-4 md:grid-cols-3 md:gap-y-6 md:gap-x-5 lg:grid-cols-4 ">
-				{recommendedShows.length > 0 &&
+				{recommendedShows.length > 0 ? (
 					recommendedShows.map((show: any) => (
 						<ShowCard
 							key={show._id}
@@ -90,7 +96,10 @@ export default async function Home({ params, searchParams }: any) {
 							isBookmarked={show.isBookmarked}
 							year={show.year}
 						/>
-					))}
+					))
+				) : (
+					<NoResult search={'Recommended Shows'} />
+				)}
 			</div>
 			<Pagination
 				page={searchParams?.page ? +searchParams?.page : 1}

@@ -46,9 +46,9 @@ export function ProfileForm({
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),
 		defaultValues: {
-			name: name || '',
-			username: username || '',
-			email: email || '',
+			name: name === 'null' ? '' : name,
+			username: username === 'null' ? '' : username,
+			email: email === 'null' ? '' : email,
 			location: location || '',
 		},
 	});
@@ -69,7 +69,6 @@ export function ProfileForm({
 				path: pathname,
 			});
 			//TODO
-			console.log(445);
 		} catch (error) {
 			console.log(error);
 			throw error;

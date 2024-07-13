@@ -5,6 +5,12 @@ import ShowCard from '@/components/shared/ShowCard';
 import Pagination from '@/components/shared/Pagination';
 import Sort from '@/components/shared/Sort';
 import { sortArray } from '@/constants';
+import { Metadata } from 'next';
+import NoResult from '@/components/shared/NoResult';
+
+export const metadata: Metadata = {
+	title: 'Movies',
+};
 
 export default async function Page({ params, searchParams }: any) {
 	const { series, isNext, pages } = await getTvShows({
@@ -24,7 +30,7 @@ export default async function Page({ params, searchParams }: any) {
 			<h1 className="h-primary mt-8 ">TV shows</h1>
 
 			<div className="mt-3 grid grid-cols-2 gap-4 md:grid-cols-3 md:gap-y-6 md:gap-x-5 lg:grid-cols-4 ">
-				{series.length > 0 &&
+				{series.length > 0 ? (
 					series.map((show) => (
 						<ShowCard
 							key={show._id}
@@ -36,7 +42,10 @@ export default async function Page({ params, searchParams }: any) {
 							isBookmarked={show.isBookmarked}
 							year={show.year}
 						/>
-					))}
+					))
+				) : (
+					<NoResult search={'TV series'} />
+				)}
 			</div>
 
 			<Pagination

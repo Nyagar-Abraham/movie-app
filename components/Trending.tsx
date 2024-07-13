@@ -1,12 +1,13 @@
 'use client';
 
 import Image from 'next/image';
-import Link from 'next/link';
+
 import { useState } from 'react';
 import { FaDotCircle } from 'react-icons/fa';
 import Play from './shared/Play';
 import Bookmark from './shared/Bookmark';
 import { getYearAsString } from '@/lib/utils/utils';
+import { useRouter } from 'next/navigation';
 
 interface Props {
 	_id: string;
@@ -28,11 +29,17 @@ const Trending = ({
 	year,
 }: Props) => {
 	const [open, setOpen] = useState(false);
+	const router = useRouter();
 
 	const id = JSON.parse(_id);
 
 	return (
 		<div
+			onDoubleClick={() =>
+				router.push(
+					`${category === 'Movie' ? `/movie/${id}` : `/tv-series/${id}`}`
+				)
+			}
 			onMouseEnter={() => setOpen(true)}
 			onMouseLeave={() => setOpen(false)}
 			className="relative flex-1 inline-block flex-none rounded-md overflow-hidden "

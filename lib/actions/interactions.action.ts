@@ -1,37 +1,61 @@
-// import Interaction from '@/database/interactions.model';
-// import { connectToDatabase } from '../mongoose';
-// import { getUserInteractionParams } from '../shared.types';
-// import { FilterQuery } from 'mongoose';
+import Interaction from '@/database/interactions.model';
+import { connectToDatabase } from '../mongoose';
+import { getUserInteractionParams } from '../shared.types';
+import { FilterQuery } from 'mongoose';
+import Show from '@/database/movie.model';
+import User from '@/database/user.model';
+import { skip } from 'node:test';
 
-// export async function getUserInterActions(params: getUserInteractionParams) {
-// 	try {
-//     connectToDatabase();
+export async function getUserInterActions(params: getUserInteractionParams) {
+	try {
+		connectToDatabase();
 
-//     const { page, pageSize, userId, searchQuery, sortBy } = params
+		const { page, pageSize, userId, searchQuery, sortBy } = params;
+		// @ts-ignore
+		const skipAmount = (page - 1) * pageSize;
 
-//     // const skipAmount = (page - 1) * pageSize;
+		let query: FilterQuery<typeof Interaction> = { user: userId };
 
-//     let query: FilterQuery<typeof Interaction> = {}
-//     if (searchQuery) {
-//        console.log('');
-//     }
+		if (searchQuery) {
+			query = { user: userId, action: { $regex: searchQuery, $options: 'i' } };
+		}
 
-//     let sortOptions = {}
+		let sortOptions = { createdAt: -1 };
 
-//     if (sortBy) {
-//       switch (sortBy) {
-//         case 'old':
-//           break;
-//         default:
-//           break;
-//       }
-//     }
+		if (sortBy) {
+			switch (sortBy) {
+				case 'oldest':
+					sortOptions = { createdAt: 1 };
+					break;
+				default:
+					break;
+			}
+		}
+		// @ts-ignore
+		const interactions = await Interaction.find(query)
+			.populate({
+				path: 'show',
+				model: Show,
+				select: 'description title',
+			})
+			.populate({
+				path: 'user',
+				model: User,
+				select: 'picture',
+			})
+			.sort(sortOptions)
+			.skip(skipAmount)
+			.limit(pageSize);
 
-//     const interactions = await Interaction.find({ user: userId });
+		const totalInteractions = await Interaction.countDocuments(query);
+		// @ts-ignore
+		const isNext = totalInteractions > skipAmount + pageSize;
+		// @ts-ignore
+		const pages = Math.ceil(totalInteractions / pageSize);
 
-//     return {interactions}
-// 	} catch (error) {
-// 		console.log(error);
-// 		throw error;
-// 	}
-// }
+		return { interactions, isNext, pages };
+	} catch (error) {
+		console.log(error);
+		throw error;
+	}
+}

@@ -13,8 +13,12 @@ import {
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-	title: 'Entertainment hub',
-	description: 'this app displays movies and tv-shows',
+	// title: 'The wild oasis',
+	title: {
+		template: '%s / Plex-Shows-app',
+		default: 'Welcome /  Plex-Shows-app',
+	},
+	description: 'This app displays movies and tv-shows',
 	icons: {
 		icon: '/assets/favicon.png',
 	},

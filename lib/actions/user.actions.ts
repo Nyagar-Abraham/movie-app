@@ -1,4 +1,3 @@
-import User from '@/database/user.model';
 import { connectToDatabase } from '../mongoose';
 import {
 	createUserParams,
@@ -8,6 +7,8 @@ import {
 } from '../shared.types';
 import { revalidatePath } from 'next/cache';
 import { FilterQuery } from 'mongoose';
+import User from '@/database/user.model';
+import Interaction from '@/database/interactions.model';
 
 export async function createUser(user: createUserParams) {
 	try {
@@ -21,15 +22,16 @@ export async function createUser(user: createUserParams) {
 		throw error;
 	}
 }
+
 export async function updateUser(params: updateUserParams) {
 	try {
 		connectToDatabase();
 
 		const { clerkId, updateData, path } = params;
 
-		console.log(clerkId, updateData, path);
-
-		const user = User.findOneAndUpdate({ clerkId }, updateData, { new: true });
+		const user = await User.findOneAndUpdate({ clerkId }, updateData, {
+			new: true,
+		});
 
 		if (path) revalidatePath(path);
 	} catch (error) {
@@ -77,6 +79,7 @@ export async function deleteUser(params: deleteUserParams) {
 		}
 
 		//TODO:interactions
+		await Interaction.deleteMany({ user: user._id });
 	} catch (error) {
 		console.log(error);
 		throw error;

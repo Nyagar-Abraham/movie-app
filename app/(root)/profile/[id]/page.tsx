@@ -1,6 +1,11 @@
 import { ProfileForm } from '@/components/user/Form';
 import { getUserById } from '@/lib/actions/user.actions';
 
+export async function generateMetadata({ params }: any) {
+	const { name } = await getUserById({ userId: params.id });
+	return { title: `${name} Profile` };
+}
+
 const page = async ({ params }: any) => {
 	const user = await getUserById({ userId: params.id });
 

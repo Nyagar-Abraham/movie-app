@@ -6,8 +6,9 @@ import {
 	upvoteShow,
 } from '@/lib/actions/show.action';
 import { usePathname } from 'next/navigation';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FaArrowDown, FaArrowUp, FaEye } from 'react-icons/fa';
+import { toast } from '../ui/use-toast';
 
 export function Vote({
 	showId,
@@ -27,6 +28,8 @@ export function Vote({
 	hasDownvoted: boolean;
 }) {
 	const pathname = usePathname();
+	const [upvote, setUpvote] = useState(false);
+	const [downvote, setDownvote] = useState(false);
 
 	const parsedUserId = JSON.parse(userId);
 	const parsedShowId = JSON.parse(showId);
@@ -44,6 +47,7 @@ export function Vote({
 
 	const handleVote = async (action: string) => {
 		if (action === 'upvote') {
+			setUpvote((u) => !u);
 			await upvoteShow({
 				userId: parsedUserId,
 				showId: parsedShowId,
@@ -52,14 +56,24 @@ export function Vote({
 				path: pathname,
 			});
 
-			//Todo
+			toast({
+				title: `Upvote successfull ${!upvote ? 'added' : 'removed'} `,
+				variant: !upvote ? 'success' : 'destructive',
+			});
 		} else {
+			setDownvote((d) => !d);
 			await downvoteShow({
 				userId: parsedUserId,
 				showId: parsedShowId,
 				hasDownvoted,
 				hasUpvoted,
 				path: pathname,
+			});
+
+			toast({
+				title: `downvote successfull ${!downvote ? 'added' : 'removed'} `,
+				variant: !downvote ? 'success' : 'destructive',
+				className: 'toast-success',
 			});
 		}
 	};
