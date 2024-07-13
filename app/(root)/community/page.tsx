@@ -15,6 +15,7 @@ export const metadata: Metadata = {
 
 const page = async ({ params, searchParams }: any) => {
 	const { userId } = auth();
+
 	const user = await getUserByClerkId({ clerkId: userId! });
 	const { users, isNext, pages } = await getAllUsers({
 		page: searchParams?.page ? searchParams?.page : 1,
