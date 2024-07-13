@@ -30,20 +30,31 @@ export default function RootLayout({
 	children: React.ReactNode;
 }) {
 	return (
-		<ClerkProvider
-			appearance={{
-				elements: {
-					formButtonPrimary:
-						'bg-gradient-to-br from-red to-red/70 text-pure-white  border-none',
-					footerActionLink: 'text-red ',
-				},
-			}}
-		>
-			<html lang="en">
-				<body className={` ${inter.className}`}>
+		<html lang="en">
+			<body className={`bg-dark ${inter.className}`}>
+				<ClerkProvider
+					appearance={{
+						elements: {
+							formButtonPrimary:
+								'bg-gradient-to-br from-red to-red/70 text-pure-white  border-none',
+							footerActionLink: 'text-red ',
+							socialButtonsBlockButton:
+								'text-slate-50 bg-gray-700 hover:bg-gray-600',
+						},
+						variables: {
+							colorPrimary: '#ff6b6b', // Red color in hex format
+							colorTextOnPrimaryBackground: '#ffffff', // White color in hex format
+							colorBackground: '#212529', // Dark gray color in hex format
+							colorInputBackground: '#495057',
+							colorText: '#f1f3f5',
+							colorNeutral: '#ced4da',
+							colorTextSecondary: '#e9ecef',
+						},
+					}}
+				>
 					<ThemeProvider>{children}</ThemeProvider>
-				</body>
-			</html>
-		</ClerkProvider>
+				</ClerkProvider>
+			</body>
+		</html>
 	);
 }
