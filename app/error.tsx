@@ -2,7 +2,7 @@
 
 export default function Error({ error, reset }: any) {
 	return (
-		<main className="flex justify-center items-center flex-col gap-6 text-light100-dark0 bg-dark100-light0 h-screen">
+		<main className="flex justify-center items-center flex-col gap-6 text-red bg-dark100-light0 h-screen">
 			<h1 className="text-3xl font-semibold ">Something went wrong!</h1>
 			<p className="text-lg ">{error.message} </p>
 

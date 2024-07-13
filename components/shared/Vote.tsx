@@ -46,6 +46,12 @@ export function Vote({
 	}, []);
 
 	const handleVote = async (action: string) => {
+		if (!parsedUserId || !parsedShowId)
+			return toast({
+				title: `something went wrong`,
+
+				variant: !upvote ? 'default' : 'destructive',
+			});
 		if (action === 'upvote') {
 			setUpvote((u) => !u);
 			await upvoteShow({

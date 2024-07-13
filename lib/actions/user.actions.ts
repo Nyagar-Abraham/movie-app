@@ -44,7 +44,7 @@ export async function getUserById(params: { userId: string }) {
 	try {
 		connectToDatabase();
 
-		const user = User.findById(params.userId);
+		const user = await User.findById(params.userId);
 
 		return user;
 	} catch (error) {
@@ -58,7 +58,7 @@ export async function getUserByClerkId(params: { clerkId: string }) {
 
 		const { clerkId } = params;
 
-		const user = User.findOne({ clerkId });
+		const user = await User.findOne({ clerkId });
 
 		return user;
 	} catch (error) {

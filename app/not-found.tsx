@@ -2,7 +2,7 @@ import Link from 'next/link';
 
 function NotFound() {
 	return (
-		<main className="text-center space-y-6 mt-4 text-light100-dark0 bg-dark100-light0 h-screen">
+		<main className="text-center space-y-6 mt-4 text-red bg-dark100-light0 h-screen">
 			<h1 className="text-3xl font-semibold">This page could not be found :</h1>
 			<Link
 				href="/"

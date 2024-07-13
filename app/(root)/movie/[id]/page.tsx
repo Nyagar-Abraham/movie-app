@@ -7,15 +7,20 @@ import { formatDate } from '@/lib/utils';
 import { auth } from '@clerk/nextjs/server';
 import Image from 'next/image';
 
+export const revalidate = 0;
 export async function generateMetadata({ params }: any) {
-	const movie = await getMovieById({ movieId: params.id });
+	const movie = (await getMovieById({ movieId: params.id })) || {};
 	return { title: `${movie.title} ` };
 }
 
-const page = async ({ params }: any) => {
+const page = async ({ params, searchParams }: any) => {
 	const { userId } = auth();
-	const user = await getUserByClerkId({ clerkId: userId! });
-	const movie = await getMovieById({ movieId: params.id });
+
+	if (!userId) return null;
+
+	const user = (await getUserByClerkId({ clerkId: userId! })) ;
+	const movie = (await getMovieById({ movieId: params.id })) ;
+	
 
 	const {
 		thumbnail: {
@@ -30,6 +35,9 @@ const page = async ({ params }: any) => {
 		userrattings,
 		_id,
 	} = movie;
+
+
+
 	return (
 		<>
 			<div className="mt-8">

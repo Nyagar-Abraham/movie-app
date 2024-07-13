@@ -7,12 +7,14 @@ import { auth } from '@clerk/nextjs/server';
 import Image from 'next/image';
 
 export async function generateMetadata({ params }: any) {
-	const series = await getTvSeriesById({ seriesId: params.id });
+	const series = (await getTvSeriesById({ seriesId: params.id })) || {};
 	return { title: `${series.title} ` };
 }
 
 const page = async ({ params }: any) => {
 	const { userId } = auth();
+
+	if (!userId) return null;
 	const user = await getUserByClerkId({ clerkId: userId! });
 
 	const series = await getTvSeriesById({ seriesId: params.id });
