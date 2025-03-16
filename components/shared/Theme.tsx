@@ -1,52 +1,79 @@
-'use client';
+"use client";
 
+import { Sun, Moon, Laptop } from "lucide-react";
+
+import * as React from "react";
+
+import { Button } from "@/components/ui/button";
 import {
-	Menubar,
-	MenubarContent,
-	MenubarItem,
-	MenubarMenu,
-	MenubarTrigger,
-} from '@/components/ui/menubar';
-import { themes } from '@/constants';
-import { useTheme } from '@/context/ThemeContext';
-import { FaMoon, FaSun } from 'react-icons/fa';
-import { FaComputer } from 'react-icons/fa6';
-const Theme = () => {
-	const { mode, setMode } = useTheme();
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
-	return (
-		<Menubar className="relative border-none bg-transparent  shadow-none">
-			<MenubarMenu>
-				<MenubarTrigger
-					className={`bg-dark90-light10 text-light90-dark10 data-[state=open]:bg-dark90-light10 data-[state=open]:text-light90-dark10 border-none ring-0 focus:bg-dark90-light-10 focus:text-light90-dark10 w-10 `}
-				>
-					<FaMoon className="h-18 w-16" />
-				</MenubarTrigger>
-				<MenubarContent className="bg-dark90-light10 text-light90-dark10 border-none min-w-[70px]  shadow-md absolute top-full mt-3 md:flex md:gap-2 md:items-center md:-mt-8 md:left-full md:flex-col md:ml-11 -left-10 md:min-w-[15px]">
-					{themes.map((theme) => (
-						<MenubarItem
-							key={theme}
-							onClick={() => {
-								setMode(theme);
+import { cn } from "@/lib/utils";
+import { themes } from "@/constants";
+import { useTheme } from "next-themes";
 
-								if (theme !== 'system') {
-									localStorage.theme = theme;
-								} else {
-									localStorage.removeItem('theme');
-								}
-							}}
-							className={`flex gap-2 capitalize ${theme === mode && 'text-red'}`}
-						>
-							{theme === 'dark' && <FaMoon />}
-							{theme === 'light' && <FaSun />}
-							{theme === 'system' && <FaComputer />}
-							<p className="md:hidden">{theme}</p>
-						</MenubarItem>
-					))}
-				</MenubarContent>
-			</MenubarMenu>
-		</Menubar>
-	);
-};
+interface Theme {
+  theme: string;
+  name: string;
+}
 
-export default Theme;
+export default function ThemeToggle() {
+  const { theme: Theme, setTheme } = useTheme();
+
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button
+          className="group hover:bg-dark80-light20  p-5 hover:bg-orange80   "
+          size="icon"
+        >
+          <Sun className="absolute size-6 rotate-0 scale-100  transition-all   dark:rotate-90 dark:scale-0" />
+          <Moon className="absolute size-6 rotate-0 scale-0   text-orange80 transition-all   dark:rotate-0 dark:scale-100  text-accent-200 hover:text-accent-100" />
+          <span className="sr-only">Toggle theme</span>
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="center" className="border-none">
+        {themes.map((theme: string) => (
+          <DropdownMenuItem
+            key={theme}
+            className={cn(
+              "flex items-center gap-4 border-l-4 hover:border-accent-100",
+              {
+                " border-accent-200 text-accent-100 ": Theme === theme,
+                " border-transparent ": Theme !== theme,
+              }
+            )}
+            onClick={() => setTheme(theme)}
+          >
+            {theme === "dark" && (
+              <Moon
+                className={cn({
+                  "text-accent-100": Theme === "dark",
+                })}
+              />
+            )}
+            {theme === "light" && (
+              <Sun
+                className={cn({
+                  "text-accent-100": Theme === "light",
+                })}
+              />
+            )}
+            {theme === "system" && (
+              <Laptop
+                className={cn({
+                  "text-accent-100": Theme === "system",
+                })}
+              />
+            )}
+            <span>{theme}</span>
+          </DropdownMenuItem>
+        ))}
+      </DropdownMenuContent>{" "}
+    </DropdownMenu>
+  );
+}

@@ -1,70 +1,111 @@
-'use client';
+"use client";
 
-import Image from 'next/image';
-import { Input } from '@/components/ui/input';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
-import { formUrlQuery, removeUrlQuery } from '@/lib/utils';
+import Image from "next/image";
+import { Input } from "@/components/ui/input";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
+import { cn, formUrlQuery, removeUrlQuery } from "@/lib/utils";
+import { icons } from "@/constants/icons";
+import { TrendingShow } from "@/utils/interfaces";
+import {
+  createTrendingShows,
+  getTrending,
+  incrementCount,
+} from "@/lib/actions/trenging.action";
 
 interface Props {
-	placeholder: string;
+  placeholder: string;
+  category?: "movie" | "tv";
+  isValid?: boolean;
+  showData?: TrendingShow;
+  isTv?: boolean;
 }
 
-const Search = ({ placeholder }: Props) => {
-	const router = useRouter();
-	const searchParams = useSearchParams();
-	const pathname = usePathname();
-	const [search, setSearch] = useState(searchParams.get('filter') || '');
+const Search = ({ placeholder, category, isValid, showData, isTv }: Props) => {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const [search, setSearch] = useState(searchParams.get("query") || "");
 
-	useEffect(() => {
-		const deBounce = setTimeout(() => {
-			if (search) {
-				const newUrl = formUrlQuery({
-					params: searchParams.toString(),
-					key: 'filter',
-					value: search,
-				});
+  useEffect(() => {
+    const deBounce = setTimeout(() => {
+      if (search) {
+        const newUrl = formUrlQuery({
+          params: searchParams.toString(),
+          key: "query",
+          value: search,
+        });
 
-				router.push(newUrl, { scroll: false });
-			} else {
-				const newUrl = removeUrlQuery({
-					params: searchParams.toString(),
-					keysToRemove: ['filter'],
-				});
+        router.push(newUrl, { scroll: false });
+      } else {
+        const newUrl = removeUrlQuery({
+          params: searchParams.toString(),
+          keysToRemove: ["query"],
+        });
 
-				router.push(newUrl, { scroll: false });
-			}
-		}, 300);
+        router.push(newUrl, { scroll: false });
+      }
+    }, 1000);
 
-		return () => {
-			clearTimeout(deBounce);
-		};
-	}, [search, pathname]);
+    return () => {
+      clearTimeout(deBounce);
+    };
+  }, [search, pathname]);
 
-	return (
-		<div className="flex gap-2 items-center  text-light90-dark10  rounded-md flex-1 min-w-fit  ">
-			<Image
-				src="/assets/icon-search.svg"
-				width={30}
-				height={30}
-				alt="search icon"
-				className="invert dark:invert-0"
-			/>
-			<Input
-				// @ts-ignore
-				value={search}
-				onChange={(e) => {
-					setSearch(e.target.value);
-				}}
-				type="text"
-				placeholder={placeholder}
-				className="bg-transparent 
-        dark:hover:bg-dark-blue 
-        focus:border-b
-				focus:border-slate-300 dark:focus:border-light-blue caret-red flex-1    "
-			/>
-		</div>
-	);
+  useEffect(() => {
+    if (!isValid) return;
+
+    async function saveShow() {
+      const _id = await getTrending({
+        searchTerm: search,
+        category: category!,
+      });
+
+      console.log({ _id });
+
+      if (!_id) {
+        await createTrendingShows({
+          showData: showData!,
+          path: isTv ? "/tv" : "/movies",
+        });
+      } else {
+        await incrementCount({ show_id: _id, path: isTv ? "/tv" : "/movies" });
+      }
+    }
+
+    saveShow();
+  }, [search]);
+
+  function handleClick() {
+    if (pathname !== "/search") {
+      router.push(`/search?category=${category}`);
+    }
+  }
+
+  return (
+    <div className="flex gap-3 items-center  text-light90-dark10  rounded-md flex-1 min-w-fit max-w-[50rem]  ">
+      <Image
+        src={icons.search}
+        width={30}
+        height={30}
+        alt="search icon"
+        className="invert dark:invert-0"
+      />
+      <Input
+        // @ts-ignore
+        onClick={handleClick}
+        value={search}
+        onChange={(e) => {
+          setSearch(e.target.value);
+        }}
+        type="text"
+        placeholder={placeholder}
+        className={cn(
+          "bg-transparent hover:bg-dark90-light10 focus:border-b focus:border-accent-200/60 h-[3rem] focus:bg-dark90-light10 caret-accent-200 flex-1"
+        )}
+      />
+    </div>
+  );
 };
 
 export default Search;

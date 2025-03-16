@@ -1,11 +1,29 @@
-const NoResult = ({ search }: { search: string }) => {
-	return (
-		<div className="flex-center">
-			<h2 className="text-3xl mt-8 text-light100-dark0 bg-dark100-light0">
-				No result found for {search}
-			</h2>
-		</div>
-	);
+import { cn } from "@/lib/utils";
+
+interface Props {
+  message: string;
+  className?: string;
+  classNameText?: string;
+}
+
+const NoResult = ({ message, className, classNameText }: Props) => {
+  return (
+    <div
+      className={cn(
+        "flex items-center justify-center min-h-[20rem]  h-full",
+        className
+      )}
+    >
+      <h2
+        className={cn(
+          "text-2xl mt-8 text-accent-100 bg-dark100-light0",
+          classNameText
+        )}
+      >
+        {message}
+      </h2>
+    </div>
+  );
 };
 
 export default NoResult;

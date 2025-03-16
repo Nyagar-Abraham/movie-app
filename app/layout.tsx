@@ -1,60 +1,79 @@
-import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
-import './globals.css';
-import { ThemeProvider } from '@/context/ThemeContext';
-import {
-	ClerkProvider,
-	SignInButton,
-	SignedIn,
-	SignedOut,
-	UserButton,
-} from '@clerk/nextjs';
+import type { Metadata } from "next";
+import { Inter } from "next/font/google";
+import "./globals.css";
 
-const inter = Inter({ subsets: ['latin'] });
+import {
+  ClerkProvider,
+  SignInButton,
+  SignedIn,
+  SignedOut,
+  UserButton,
+} from "@clerk/nextjs";
+import { Toaster } from "@/components/ui/toaster";
+import Navbar from "@/components/shared/Navbar";
+import { ThemeProvider } from "@/components/theme-provider";
+import { PopularMoviesProvider } from "@/context/PopularMoviesContext";
+
+const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-	// title: 'The wild oasis',
-	title: {
-		template: '%s / Plex-Shows-app',
-		default: 'Welcome /  Plex-Shows-app',
-	},
-	description: 'This app displays movies and tv-shows',
-	icons: {
-		icon: '/assets/favicon.png',
-	},
+  title: {
+    template: "%s / Plex-Shows-app",
+    default: "Welcome /  Plex-Shows-app",
+  },
+  description: "This app displays movies and tv-shows",
+  icons: {
+    icon: "/assets/favicon.png",
+  },
 };
 
 export default function RootLayout({
-	children,
+  children,
 }: {
-	children: React.ReactNode;
+  children: React.ReactNode;
 }) {
-	return (
-		<html lang="en">
-			<body className={`bg-dark ${inter.className}`}>
-				<ClerkProvider
-					appearance={{
-						elements: {
-							formButtonPrimary:
-								'bg-gradient-to-br from-red to-red/70 text-pure-white  border-none',
-							footerActionLink: 'text-red ',
-							socialButtonsBlockButton:
-								'text-slate-50 bg-gray-700 hover:bg-gray-600',
-						},
-						variables: {
-							colorPrimary: '#ff6b6b', // Red color in hex format
-							colorTextOnPrimaryBackground: '#ffffff', // White color in hex format
-							colorBackground: '#212529', // Dark gray color in hex format
-							colorInputBackground: '#495057',
-							colorText: '#f1f3f5',
-							colorNeutral: '#ced4da',
-							colorTextSecondary: '#e9ecef',
-						},
-					}}
-				>
-					<ThemeProvider>{children}</ThemeProvider>
-				</ClerkProvider>
-			</body>
-		</html>
-	);
+  return (
+    <html lang="en" className="hide-scrollbar">
+      <body
+        className={`bg-dark100-light0 min-h-svh hide-scrollbar     ${inter.className}`}
+      >
+        <ClerkProvider
+          appearance={{
+            elements: {
+              formButtonPrimary:
+                "bg-gradient-to-br from-red to-red/70 text-pure-white  border-none",
+              footerActionLink: "text-red ",
+              socialButtonsBlockButton:
+                "text-slate-50 bg-gray-700 hover:bg-gray-600",
+            },
+            variables: {
+              colorPrimary: "#ff6b6b", // Red color in hex format
+              colorTextOnPrimaryBackground: "#ffffff", // White color in hex format
+              colorBackground: "#212529", // Dark gray color in hex format
+              colorInputBackground: "#495057",
+              colorText: "#f1f3f5",
+              colorNeutral: "#ced4da",
+              colorTextSecondary: "#e9ecef",
+            },
+          }}
+        >
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <PopularMoviesProvider>
+              <Navbar />
+
+              <main className="h-full text-light100-dark0  transition-all duration-300 scrollbar-hidden overflow-y-auto min-h-svh ">
+                {children}
+              </main>
+            </PopularMoviesProvider>
+          </ThemeProvider>
+          <Toaster />
+        </ClerkProvider>
+      </body>
+    </html>
+  );
 }
