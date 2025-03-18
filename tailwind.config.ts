@@ -93,7 +93,8 @@ const config = {
   plugins: [
     require("tailwindcss-animate"),
     require("tailwind-scrollbar-hide"),
-    function ({ addUtilities }) {
+    // @ts-ignore
+    function ({ addUtilities }: any) {
       addUtilities({
         ".no-scroll": {
           overflow: "hidden", // Disables scrolling
