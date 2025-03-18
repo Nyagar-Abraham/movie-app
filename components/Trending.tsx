@@ -52,8 +52,6 @@ const Trending = ({
         height={200}
       />
 
-      <Bookmark isBookmarked={isBookmarked} />
-
       <Play width={24} height={24} open={open} />
 
       <div className="absolute bottom-5 left-2 bg-transparent backdrop-blur-2">

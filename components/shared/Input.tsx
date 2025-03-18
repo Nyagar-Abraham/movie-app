@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { Input } from "@/components/ui/input";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { cn, formUrlQuery, removeUrlQuery } from "@/lib/utils";
 import { icons } from "@/constants/icons";
 import { TrendingShow } from "@/utils/interfaces";
@@ -18,14 +18,14 @@ interface Props {
   category?: "movie" | "tv";
   isValid?: boolean;
   showData?: TrendingShow;
-  isTv?: boolean;
 }
 
-const Search = ({ placeholder, category, isValid, showData, isTv }: Props) => {
+const Search = ({ placeholder, category, isValid, showData }: Props) => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const [search, setSearch] = useState(searchParams.get("query") || "");
+  const isTv = category === "tv";
 
   useEffect(() => {
     const deBounce = setTimeout(() => {
@@ -53,6 +53,7 @@ const Search = ({ placeholder, category, isValid, showData, isTv }: Props) => {
   }, [search, pathname]);
 
   useEffect(() => {
+    console.log("run", isValid, category);
     if (!isValid) return;
 
     async function saveShow() {
@@ -76,11 +77,11 @@ const Search = ({ placeholder, category, isValid, showData, isTv }: Props) => {
     saveShow();
   }, [search]);
 
-  function handleClick() {
+  const handleClick = useCallback(() => {
     if (pathname !== "/search") {
       router.push(`/search?category=${category}`);
     }
-  }
+  }, []);
 
   return (
     <div className="flex gap-3 items-center  text-light90-dark10  rounded-md flex-1 min-w-fit max-w-[50rem]  ">
@@ -95,9 +96,7 @@ const Search = ({ placeholder, category, isValid, showData, isTv }: Props) => {
         // @ts-ignore
         onClick={handleClick}
         value={search}
-        onChange={(e) => {
-          setSearch(e.target.value);
-        }}
+        onChange={(e) => setSearch(e.target.value)}
         type="text"
         placeholder={placeholder}
         className={cn(

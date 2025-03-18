@@ -6,7 +6,7 @@ const useMatchPath = () => {
   const pathname = usePathname();
 
   // Regular expression to match "/movies/{id}" or "/tv-series/{id}"
-  const match = /^\/(movies|tv-series)\/\d+$/.test(pathname);
+  const match = /^\/(movies|tv)\/\d+$/.test(pathname);
 
   return match;
 };

@@ -3,6 +3,8 @@
 import ShowTv from "@/database/show.model";
 import { connectToDatabase } from "../mongoose";
 import { revalidatePath } from "next/cache";
+import User from "@/database/user.model";
+import Trending from "@/database/trending.model";
 
 interface createShowparams {
   showData: {
@@ -11,6 +13,7 @@ interface createShowparams {
     vote_average: number;
     vote_count: number;
     release_date: string;
+    poster_url?: string;
     category: string;
     saved?: string[];
     favorites?: string[];
@@ -100,9 +103,38 @@ export async function getMongoShow({ category, show_id }: getMongoShowsParams) {
     connectToDatabase();
     const show = await ShowTv.findOne({ category, show_id }).lean();
 
-    if (!show) return {};
+    if (!show) return null;
 
     return show;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
+
+interface getUserDashboardDataParams {
+  user_id: string;
+}
+
+export async function getUserDashboardData({
+  user_id,
+}: getUserDashboardDataParams) {
+  try {
+    connectToDatabase();
+
+    const user = await User.findOne({ clerkId: user_id });
+
+    if (!user) {
+      throw new Error("user not found");
+    }
+
+    const favorites = await ShowTv.find({ favorites: { $in: [user_id] } });
+
+    const saved = await ShowTv.find({ saved: { $in: [user_id] } });
+
+    const searched = await Trending.find({ user_id });
+
+    return { user, favorites, saved, searched };
   } catch (error) {
     console.log(error);
     throw error;

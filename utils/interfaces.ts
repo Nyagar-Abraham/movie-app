@@ -31,17 +31,59 @@ export interface Tv {
   vote_count: number;
 }
 
+export interface MongoShow {
+  _id: string;
+  title: string;
+  show_id: string;
+  vote_average: number;
+  vote_count: number;
+  release_date: string;
+  poster_url?: string;
+  category: string;
+  saved?: string[];
+  favorites?: string[];
+  views?: string[];
+}
+
 export interface TrendingShow {
   _id?: string;
   searchTerm: string;
   show_id: string;
+  user_id: string;
   title: string;
   vote_average: number;
   vote_count: number;
   release_date: string;
-  count: number;
   poster_url: string;
+  count: number;
   category: "movie" | "tv";
+}
+
+export interface Video {
+  iso_639_1: string;
+  iso_3166_1: string;
+  name: string;
+  key: string;
+  published_at: string;
+  site: string;
+  size: number;
+  type: string;
+  official: boolean;
+  id: string;
+}
+
+export interface CastCrew {
+  adult: boolean;
+  gender: number;
+  id: number;
+  known_for_department: string;
+  name: string;
+  original_name: string;
+  popularity: number;
+  profile_path: string;
+  character: string;
+  credit_id: string;
+  order: number;
 }
 
 export interface MovieDetails {
@@ -90,6 +132,24 @@ export interface MovieDetails {
   video: boolean;
   vote_average: number;
   vote_count: number;
+  videos: {
+    results: Video[];
+  };
+  credits: {
+    cast: CastCrew[];
+    crew: CastCrew[];
+  };
+}
+
+export interface Season {
+  air_date: string;
+  episode_count: number;
+  id: number;
+  name: string;
+  overview: string;
+  poster_path: string;
+  season_number: number;
+  vote_average: number;
 }
 
 export interface TVDetails {
@@ -160,16 +220,7 @@ export interface TVDetails {
     iso_3166_1: string;
     name: string;
   }[];
-  seasons: {
-    air_date: string;
-    episode_count: number;
-    id: number;
-    name: string;
-    overview: string;
-    poster_path: string;
-    season_number: number;
-    vote_average: number;
-  }[];
+  seasons: Season[];
   spoken_languages: {
     english_name: string;
     iso_639_1: string;
@@ -180,28 +231,13 @@ export interface TVDetails {
   type: string;
   vote_average: number;
   vote_count: number;
-}
-
-export interface MongoShow {
-  _id: string;
-  title: string;
-  show_id: string;
-  vote_average: number;
-  vote_count: number;
-  release_date: string;
-  category: string;
-  saved?: string[];
-  favorites?: string[];
-  views?: string[];
-}
-
-export interface MongoTrending {
-  _id: string;
-  searchTerm: string;
-  show_id: string;
-  title: string;
-  count: number;
-  poster_url: string;
+  videos: {
+    results: Video[];
+  };
+  credits: {
+    cast: CastCrew[];
+    crew: CastCrew[];
+  };
 }
 
 export interface ShowData {
@@ -210,5 +246,6 @@ export interface ShowData {
   vote_average: number;
   vote_count: number;
   release_date: string;
+  poster_url?: string;
   category: string;
 }

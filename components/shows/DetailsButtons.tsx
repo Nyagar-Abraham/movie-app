@@ -3,18 +3,20 @@
 import React from "react";
 import ButtonComponent from "../shared/Button";
 import { PlayIcon } from "lucide-react";
+import Link from "next/link";
 
-const DetailsButtons = () => {
+interface DetailsButtons {
+  homepage: string | null;
+}
+
+const DetailsButtons = ({ homepage }: DetailsButtons) => {
   return (
-    <div className="mt-5 flex items-center gap-4 flex-wrap">
-      <ButtonComponent
-        onClick={() => {}}
-        icon={<PlayIcon className="size-4 " />}
-        variant="primary"
-        className="!bg-secondary-100"
-      >
-        Watch now
-      </ButtonComponent>
+    <div className="mt-5 flex items-center max-md:items-stretch gap-4 flex-wrap">
+      {homepage && (
+        <Link href={homepage} className="px-4 py-2 bg-secondary-100 rounded-md">
+          View homepage
+        </Link>
+      )}
       <ButtonComponent
         onClick={() => {}}
         icon={<PlayIcon className="size-4 " />}

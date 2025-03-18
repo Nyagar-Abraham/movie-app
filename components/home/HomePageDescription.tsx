@@ -13,7 +13,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import DisplayShowProps from "../shared/ReleaseDate";
 
 interface HomeImageDescriptionProps {
-  popularShows: (Movie | Tv)[];
+  popularShows: Movie[] & Tv[];
 }
 
 const HomePageDescription = ({ popularShows }: HomeImageDescriptionProps) => {
@@ -24,9 +24,7 @@ const HomePageDescription = ({ popularShows }: HomeImageDescriptionProps) => {
 
   const { index } = usePopularMoviesContext();
 
-  const currentShow = popularShows[index];
-
-  console.log(currentShow);
+  const currentShow: Movie & Tv = popularShows[index];
 
   const {
     title,
@@ -64,7 +62,6 @@ const HomePageDescription = ({ popularShows }: HomeImageDescriptionProps) => {
         <ButtonComponent
           onClick={handleClick}
           icon={<PlayIcon className="size-[20px] text-white " />}
-          iconSize={24}
           variant="primary"
         >
           Watch Now

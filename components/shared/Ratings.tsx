@@ -3,8 +3,8 @@ import Image from "next/image";
 import React from "react";
 
 interface Ratingsprops {
-  voteAverage: number;
-  voteCount: number;
+  voteAverage: number | undefined;
+  voteCount: number | undefined;
   className?: string;
   iconSize: number;
 }

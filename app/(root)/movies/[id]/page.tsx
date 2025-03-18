@@ -2,15 +2,13 @@ import ImageComponent from "@/components/home/ImageComponent";
 import BackButton from "@/components/shared/BackButton";
 import MaxWidthWrapper from "@/components/shared/MaxWidthWrapper";
 
-import Vote from "@/components/shared/Vote";
 import ShowsDetailsCard from "@/components/shows/ShowsDetailsCard";
-import { getMovieById } from "@/lib/actions/PreShows.action";
+import Videos from "@/components/shows/Videos";
+
 import { getMongoShow } from "@/lib/actions/show.action";
 import { getUserByClerkId } from "@/lib/actions/user.actions";
-import { formatDate } from "@/lib/utils";
 import { getShows } from "@/utils/api";
 import { auth } from "@clerk/nextjs/server";
-import Image from "next/image";
 
 export const revalidate = 0;
 export async function generateMetadata({ params }: any) {
@@ -31,9 +29,6 @@ const page = async ({ params, searchParams }: any) => {
     getMongoShow({ category: "movie", show_id: movieId.toString() }),
   ]);
 
-  // console.log({ movie });
-  // console.log({ user });
-
   return (
     <section className="min-h-svh relative border border-transparent ">
       <ImageComponent show={movie} image="backdrop" />
@@ -41,9 +36,14 @@ const page = async ({ params, searchParams }: any) => {
       <div className="absolute inset-y-0 right-0 w-7/12 bg-gradient-to-l from-black/50 via-black/50  to-transparent pointer-events-none" />
 
       <MaxWidthWrapper className="relative z-30 p-6  mt-[8rem] grid md:grid-cols-2 gap-8 ">
-        <BackButton className="!w-[8rem]" />
+        <div className="flex overflow-hidden  flex-col justify-between items-start">
+          <BackButton className="!w-[8rem]" />
+          <Videos videos={movie?.videos?.results?.slice(0, 5)} />
+        </div>
+
         <div className="ml-auto lg:max-w-[30rem] md:max-w-[20rem]">
           <ShowsDetailsCard
+            // @ts-ignore
             mongoShow={mongoMovie}
             show={movie}
             category="movie"

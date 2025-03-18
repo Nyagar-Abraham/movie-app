@@ -1,19 +1,17 @@
 import HomePageDescription from "@/components/home/HomePageDescription";
 import ImageComponent from "@/components/home/ImageComponent";
 import SelectCategory from "@/components/home/SelectCategory";
-import Slider from "@/components/home/Slider";
 import Heading from "@/components/home/heading";
 import MaxWidthWrapper from "@/components/shared/MaxWidthWrapper";
 import ShowCard from "@/components/shared/ShowCard";
+import { Carousel } from "@/components/shows/CaroselBanner";
 
-import { PopularMoviesProvider } from "@/context/PopularMoviesContext";
 import { getShows } from "@/utils/api";
 import { Movie, Tv } from "@/utils/interfaces";
-import { Metadata } from "next";
 
-export const metadata: Metadata = {
-  title: "All Shows",
-};
+// export const metadata: Metadata = {
+//   title: "All Shows",
+// };
 
 export default async function Home({ params, searchParams }: any) {
   const category = searchParams?.category;
@@ -40,9 +38,6 @@ export default async function Home({ params, searchParams }: any) {
   const popularShows = popular.results;
   const nowPlayingOrTopRatedShow = nowPlayingOrTopRated.results;
 
-  console.log({ popularShows });
-  console.log({ nowPlayingOrTopRatedShow });
-
   if (!popularShows || !nowPlayingOrTopRatedShow) return null;
 
   return (
@@ -64,32 +59,42 @@ export default async function Home({ params, searchParams }: any) {
           </div>
         </MaxWidthWrapper>
       </section>
-      <section className="min-h-svh border border-transparent">
+      <section className="min-h-svh py-10 border border-transparent">
         <MaxWidthWrapper className="   ">
-          <Heading className="mt-12">
-            {isTv
-              ? `Popular Tv Shows ${new Date().getFullYear()}`
-              : "Now Playing"}
-          </Heading>
-          <Slider className="mt-4">
-            <div className="overflow-hidden overflow-x-auto flex items-center gap-8 hide-scrollbar ">
-              {nowPlayingOrTopRatedShow.map((show: Movie | Tv) => (
-                <ShowCard key={show.id} show={show} className="min-w-[20rem]" />
-              ))}
+          <div className="grid grid-cols-1  md:grid-cols-2 gap-8">
+            <div>
+              <Heading className="mt-10 uppercase">
+                {isTv
+                  ? `Popular Tv Shows ${new Date().getFullYear()}`
+                  : "Now Playing"}
+              </Heading>
+              <Carousel className="mt-4">
+                {nowPlayingOrTopRatedShow.map((show: Movie & Tv) => (
+                  <ShowCard
+                    key={show.id}
+                    show={show}
+                    className="flex-full w-[20rem] min-h-[45rem]"
+                  />
+                ))}
+              </Carousel>
             </div>
-          </Slider>
-          <Heading className="mt-8">
-            {isTv
-              ? "Top Rated tv Series"
-              : `Popular movies in ${new Date().getFullYear()}`}
-          </Heading>
-          <Slider className="mt-4">
-            <div className="overflow-hidden overflow-x-auto flex items-center gap-8 hide-scrollbar ">
-              {popularShows.map((show: Movie | Tv) => (
-                <ShowCard key={show.id} show={show} className="min-w-[20rem]" />
-              ))}
+            <div>
+              <Heading className="mt-10 uppercase">
+                {isTv
+                  ? "Top Rated tv Series"
+                  : `Popular movies in ${new Date().getFullYear()}`}
+              </Heading>
+              <Carousel className="mt-4">
+                {popularShows.map((show: Movie & Tv) => (
+                  <ShowCard
+                    key={show.id}
+                    show={show}
+                    className="flex-full min-w-[20rem] min-h-[45rem] "
+                  />
+                ))}
+              </Carousel>
             </div>
-          </Slider>
+          </div>
         </MaxWidthWrapper>
       </section>
     </>

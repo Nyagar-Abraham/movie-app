@@ -7,13 +7,13 @@ import { LucideProps, PlayIcon } from "lucide-react";
 interface ButtonProps {
   children: React.ReactNode;
   className?: string;
-  icon?: React.ForwardRefExoticComponent<
-    Omit<LucideProps, "ref"> & React.RefAttributes<SVGSVGElement>
-  >;
+  icon?: React.ReactNode;
   variant?: "primary" | "secondary";
   onClick: () => void;
 }
-
+// React.ForwardRefExoticComponent<
+// Omit<LucideProps, "ref"> & React.RefAttributes<SVGSVGElement>
+// >;
 const ButtonComponent = ({
   children,
   className,

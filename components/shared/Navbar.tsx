@@ -16,7 +16,7 @@ const Navbar = () => {
 
   return (
     <nav
-      className={cn(" top-0 py-3   fixed inset-x-0 z-20", {
+      className={cn(" top-0 py-3 z-50 min-h-[4rem]  fixed inset-x-0 ", {
         "backdrop-blur-md ": isTransparent,
         "bg-dark90-light10": !isTransparent,
       })}

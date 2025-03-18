@@ -64,7 +64,6 @@ const Actions = ({
   const isFavorite = mongoShow?.favorites?.includes(userId);
   const isViewed = mongoShow?.views?.includes(userId);
 
-  console.log({ userId });
   async function handleAction(field: "saved" | "favorites") {
     try {
       setIsUpdating(true);
@@ -129,8 +128,10 @@ const Actions = ({
   }
 
   useEffect(() => {
+    console.log({ match });
     if (!match) return;
 
+    console.log({ showData });
     async function handleView() {
       try {
         // Check if the show exists

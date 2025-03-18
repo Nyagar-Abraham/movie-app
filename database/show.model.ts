@@ -6,6 +6,7 @@ export interface IShowTv extends Document {
   vote_average: number;
   vote_count: number;
   release_date: string;
+  poster_url?: string;
   category: string;
   saved?: string[];
   favorites?: string[];
@@ -18,6 +19,7 @@ const ShowTvSchema = new Schema<IShowTv>({
   vote_average: { type: Number, required: true },
   vote_count: { type: Number, required: true },
   release_date: { type: String, required: true },
+  poster_url: { type: String, required: true },
   category: { type: String, required: true },
   saved: { type: [String], default: [] },
   favorites: { type: [String], default: [] },

@@ -2,8 +2,6 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
-
-import { useSearchParams } from "next/navigation";
 import { useGSAP } from "@gsap/react";
 import { cn } from "@/lib/utils";
 
@@ -18,44 +16,78 @@ const Slider = ({
 }) => {
   const [paused, setPaused] = useState(false);
   const sliderRef = useRef<HTMLDivElement | null>(null);
-  const animation: any = useRef();
+  const animation = useRef<gsap.core.Tween | null>(null);
 
-  // useGSAP(()=>{
-  // 	const div =sliderRef.current
+  const updateAnimation = (restart = false) => {
+    const scrollable = sliderRef.current;
+    const slider = document.getElementById("slider");
 
-  // 	animation.current = gsap.to('#slider', {
-  // 		x: -sliderWidth,
-  // 		duration: 35,
-  // 		repeat: -1,
-  // 		yoyo: true,
-  // 		repeatDelay: 1,
-  // 		ease: 'none',
-  // 	});
-  // },{
-  // 	dependencies:[],scope:sliderRef
-  // })
+    if (scrollable && slider) {
+      const scrollableWidth = scrollable.offsetWidth;
+      const sliderWidth = slider.scrollWidth;
+      const sliderLength = sliderWidth - scrollableWidth;
+
+      if (sliderLength <= 0) return; // No animation needed if everything fits.
+
+      const duration = sliderLength * 0.01538;
+
+      if (animation.current && restart) {
+        animation.current.duration(duration);
+        return;
+      }
+
+      animation.current?.kill();
+      animation.current = gsap.to(slider, {
+        x: -sliderLength,
+        duration,
+        repeat: -1,
+        yoyo: true,
+        repeatDelay: 1,
+        ease: "none",
+      });
+    }
+  };
+
+  useEffect(() => {
+    updateAnimation(); // Start animation immediately
+
+    const handleResize = () => {
+      updateAnimation(true); // Restart on resize
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      animation.current?.kill();
+    };
+  }, []);
 
   return (
     <div
       ref={sliderRef}
-      className={cn(" min-w-full", className)}
+      className={cn(
+        "w-full overflow-hidden hide-scrollbar overflow-x-auto",
+        className
+      )}
       onMouseLeave={() => {
         if (paused) {
-          animation.current.play();
+          animation.current?.play();
           setPaused(false);
         }
       }}
       onClick={() => {
-        if (!paused) {
-          animation.current.pause();
-          setPaused(true);
-        } else {
-          animation.current.play();
+        if (paused) {
+          animation.current?.play();
           setPaused(false);
+        } else {
+          animation.current?.pause();
+          setPaused(true);
         }
       }}
     >
-      {children}
+      <div id="slider" className="flex items-center gap-8 whitespace-nowrap">
+        {children}
+      </div>
     </div>
   );
 };

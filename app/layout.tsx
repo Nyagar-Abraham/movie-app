@@ -18,12 +18,13 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: {
-    template: "%s / Plex-Shows-app",
-    default: "Welcome /  Plex-Shows-app",
+    template: "%s / CineSphere",
+    default: "Welcome /  CineSphere",
   },
-  description: "This app displays movies and tv-shows",
+  description:
+    "CineSphere is your ultimate hub for discovering and streaming movies and series. Explore trending films, binge-worthy shows, and personalized recommendations—all in one sleek, user-friendly app",
   icons: {
-    icon: "/assets/favicon.png",
+    icon: "/assets/icons/logo.png",
   },
 };
 

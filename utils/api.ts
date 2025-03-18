@@ -84,7 +84,7 @@ export async function getShows({ query, target, show_id, page }: GetShowProps) {
   endPoint = `${endPoint}?language=en-US`;
 
   if (target === "movieDetails" || target === "tvDetails")
-    endPoint = `${endPoint}&append_to_response=videos`;
+    endPoint = `${endPoint}&append_to_response=videos,credits`;
 
   if (query) {
     endPoint = `${endPoint}&query=${encodeURIComponent(query)}`;
@@ -95,8 +95,6 @@ export async function getShows({ query, target, show_id, page }: GetShowProps) {
   }
 
   if (page && page > 1) endPoint = `${endPoint}&page=${page}`;
-
-  console.log({ endPoint });
 
   try {
     const { data } = await axios.get(endPoint, {

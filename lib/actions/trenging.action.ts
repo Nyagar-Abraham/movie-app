@@ -47,6 +47,8 @@ export async function createTrendingShows(params: createTrendingShowsParams) {
     await session.commitTransaction(); // Commit the transaction
     session.endSession();
 
+    console.log("created trending", updatedTrending);
+
     revalidatePath(path);
     return updatedTrending._id.toString();
   } catch (error) {
@@ -69,7 +71,6 @@ export async function getTrending({
 
     const trending = await Trending.findOne({ searchTerm, category });
 
-    console.log("tptptptp", trending);
     if (!trending) return null;
 
     return trending._id.toString();
@@ -95,7 +96,8 @@ export async function incrementCount({
       { new: true }
     );
 
-    console.log(2, trending);
+    revalidatePath(path);
+    console.log("incremented count", trending);
   } catch (error) {
     console.log(error);
     throw error;

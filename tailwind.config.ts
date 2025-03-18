@@ -61,6 +61,9 @@ const config = {
           foreground: "hsl(var(--card-foreground))",
         },
       },
+      flex: {
+        full: "0 0 100%",
+      },
       screens: {
         mdl: "900px",
         xll: "1340px",

@@ -14,15 +14,9 @@ export const Links = [
     label: "Search",
   },
   {
-    href: "/bookmark",
+    href: "/dashboard",
     icon: icons.save,
-    label: "Bookmark",
-  },
-
-  {
-    href: "/history",
-    icon: icons.home,
-    label: "History",
+    label: "Dashboard",
   },
 ];
 

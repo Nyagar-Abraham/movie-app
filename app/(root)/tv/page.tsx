@@ -1,3 +1,4 @@
+import Heading from "@/components/home/heading";
 import Slider from "@/components/home/Slider";
 import Search from "@/components/shared/Input";
 import MaxWidthWrapper from "@/components/shared/MaxWidthWrapper";
@@ -8,7 +9,7 @@ import Sort from "@/components/shared/Sort";
 import { sortArray } from "@/constants";
 import { getAllTrending } from "@/lib/actions/trenging.action";
 import { getShows } from "@/utils/api";
-import { TrendingShows, Tv } from "@/utils/interfaces";
+import { MongoShow, Movie, TrendingShow, Tv } from "@/utils/interfaces";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -36,26 +37,27 @@ export default async function Page({ params, searchParams }: any) {
 
       {trending?.length > 0 && (
         <>
-          <h1 className="h-primary mt-10 ">Top Searched </h1>
+          <Heading showRule className="uppercase mt-10 text-2xl tracking-wide">
+            Top Searched tv shows
+          </Heading>
           <Slider className="mt-4">
-            <div className="overflow-hidden overflow-x-auto flex items-center gap-8 hide-scrollbar ">
-              {trending?.map((show: TrendingShows, index: number) => (
-                <ShowCard
-                  key={show._id}
-                  trendingShow={show}
-                  className="min-w-[20rem]"
-                  index={index + 1}
-                />
-              ))}
-            </div>
-          </Slider>
+            {trending.map((show: TrendingShow & MongoShow, index: number) => (
+              <ShowCard
+                key={show._id}
+                dbShow={show}
+                className="min-w-[20rem]"
+                index={index + 1}
+              />
+            ))}
+          </Slider>{" "}
         </>
       )}
-
-      <h1 className="h-primary mt-8 ">TV shows</h1>
+      <Heading showRule className="uppercase mt-8 text-2xl tracking-wide">
+        Tv shows
+      </Heading>
       <div className="mt-3 grid grid-cols-2 gap-4 md:grid-cols-3 md:gap-y-6 md:gap-x-5 lg:grid-cols-4 ">
         {series.length > 0 ? (
-          series.map((show: Tv) => (
+          series.map((show: Tv & Movie) => (
             <ShowCard key={show.id} show={show} category="tv" />
           ))
         ) : (
