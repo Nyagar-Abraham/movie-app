@@ -11,11 +11,9 @@ import { Movie, TrendingShow, Tv } from "@/utils/interfaces";
 import { auth } from "@clerk/nextjs/server";
 
 export async function generateMetadata({
-  params,
   seachparams,
 }: {
-  params: { id: string };
-  seachparams: { category: string };
+  seachparams: { category: string | null };
 }) {
   return { title: `Search ${seachparams?.category} ` };
 }
@@ -94,7 +92,7 @@ export default async function Page({ params, searchParams }: any) {
         })}
       >
         {shows?.length > 0 ? (
-          shows?.map((show: Movie | Tv) => (
+          shows?.map((show: Movie & Tv) => (
             <ShowCard key={show?.id} show={show} />
           ))
         ) : (
