@@ -11,11 +11,11 @@ import { Movie, TrendingShow, Tv } from "@/utils/interfaces";
 import { auth } from "@clerk/nextjs/server";
 
 export async function generateMetadata({
-  seachparams,
+  searchParams,
 }: {
-  seachparams: { category: string | null };
+  searchParams: { category?: string };
 }) {
-  return { title: `Search ${seachparams?.category} ` };
+  return { title: `Search - ${searchParams.category ?? "All"}` };
 }
 
 export default async function Page({ params, searchParams }: any) {
