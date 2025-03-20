@@ -27,7 +27,7 @@ const ShowTvSchema = new Schema<IShowTv>({
 });
 
 // Explicitly create a unique index
-ShowTvSchema.index({ show_id: 1 }, { unique: true });
+// ShowTvSchema.index({ show_id: 1 }, { unique: true });
 
 const ShowTv = models?.ShowTv || model<IShowTv>("ShowTv", ShowTvSchema);
 

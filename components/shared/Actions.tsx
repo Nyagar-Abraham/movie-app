@@ -24,29 +24,6 @@ interface ActionsProps {
   mongoShow: MongoShow | null;
 }
 
-// interface addShowMetricsParams {
-//   newShowData: {
-//     showData: {
-//       title: string;
-//       show_id: string;
-//       vote_average: number;
-//       vote_count: number;
-//       release_date: string;
-//       category: string;
-//     };
-//     field: "view" | "like" | "save";
-//     action: "add" | "remove";
-//     path: string;
-//   };
-//   updateShowData: {
-//     show_id: string;
-//     user_id: string;
-//     field: "view" | "like" | "save";
-//     action: "add" | "remove";
-//     path: string;
-//   };
-// }
-
 const Actions = ({
   mongoShow,
   isDetailCard,
@@ -106,17 +83,31 @@ const Actions = ({
       }
 
       //show confirmation feedback
-      console.log({ id });
+
+      let message;
+
+      if (field === "favorites") {
+        message = isFavorite
+          ? `${showData.title} successfull removed from favorites`
+          : `${showData.title} successfull added to favorites`;
+      }
+
+      if (field === "saved") {
+        message = isSaved
+          ? `${showData.title} successfull removed from bookmaks`
+          : `${showData.title} successfull added to bookmarks`;
+      }
+
       if (id) {
         toast({
           title: "Success",
-          description: `${field} successfull`,
+          description: message,
           variant: "default",
         });
       } else {
         toast({
           title: "failed",
-          description: `${field} failed`,
+          description: `something went wrong`,
           variant: "destructive",
         });
       }
@@ -128,10 +119,8 @@ const Actions = ({
   }
 
   useEffect(() => {
-    console.log({ match });
     if (!match) return;
 
-    console.log({ showData });
     async function handleView() {
       try {
         // Check if the show exists
@@ -212,7 +201,7 @@ const Actions = ({
         disabled={isUpdating}
         onClick={() => handleAction("favorites")}
         className={cn(
-          "h-[28px] w-[28px] rounded-full   flex-center bg-transparent",
+          "h-[28px] w-[28px] rounded-full flex-center gap-1   flex-center bg-transparent",
           {
             "absolute top-4 right-5": !isDetailCard,
           }
@@ -222,7 +211,8 @@ const Actions = ({
           className={cn("size-5 hover:text-secondary-100", {
             "text-secondary-100 fill-secondary-100": isFavorite,
           })}
-        />
+        />{" "}
+        <span className="text-sm">{mongoShow?.favorites?.length}</span>
       </button>
       <button
         disabled={isUpdating}

@@ -1,31 +1,23 @@
 "use client";
 
-import Image from "next/image";
 import { Input } from "@/components/ui/input";
+import { icons } from "@/constants/icons";
+import { cn, formUrlQuery, removeUrlQuery } from "@/lib/utils";
+import { TrendingShow } from "@/utils/interfaces";
+import Image from "next/image";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
-import { cn, formUrlQuery, removeUrlQuery } from "@/lib/utils";
-import { icons } from "@/constants/icons";
-import { TrendingShow } from "@/utils/interfaces";
-import {
-  createTrendingShows,
-  getTrending,
-  incrementCount,
-} from "@/lib/actions/trenging.action";
 
 interface Props {
   placeholder: string;
   category?: "movie" | "tv";
-  isValid?: boolean;
-  showData?: TrendingShow;
 }
 
-const Search = ({ placeholder, category, isValid, showData }: Props) => {
+const Search = ({ placeholder, category }: Props) => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const [search, setSearch] = useState(searchParams.get("query") || "");
-  const isTv = category === "tv";
 
   useEffect(() => {
     const deBounce = setTimeout(() => {
@@ -51,31 +43,6 @@ const Search = ({ placeholder, category, isValid, showData }: Props) => {
       clearTimeout(deBounce);
     };
   }, [search, pathname]);
-
-  useEffect(() => {
-    console.log("run", isValid, category);
-    if (!isValid) return;
-
-    async function saveShow() {
-      const _id = await getTrending({
-        searchTerm: search,
-        category: category!,
-      });
-
-      console.log({ _id });
-
-      if (!_id) {
-        await createTrendingShows({
-          showData: showData!,
-          path: isTv ? "/tv" : "/movies",
-        });
-      } else {
-        await incrementCount({ show_id: _id, path: isTv ? "/tv" : "/movies" });
-      }
-    }
-
-    saveShow();
-  }, [search]);
 
   const handleClick = useCallback(() => {
     if (pathname !== "/search") {

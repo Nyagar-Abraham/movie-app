@@ -21,7 +21,7 @@ export const Links = [
 ];
 
 export const themes = ["dark", "light", "system"];
-export const sortArray = ["popular", "latest", "old"];
+export const sortArray = ["latest", "oldest"];
 export const InteractionSortArray = ["oldest"];
 export const usersortArray = ["most active", "name"];
 // export const sorts = ['popular', 'latest', 'old', 'adult', 'general'];

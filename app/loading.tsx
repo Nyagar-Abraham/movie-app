@@ -1,3 +1,4 @@
+import MaxWidthWrapper from "@/components/shared/MaxWidthWrapper";
 import { Skeleton } from "@/components/ui/skeleton";
 
 export default async function Loading({ params, searchParams }: any) {
@@ -6,11 +7,12 @@ export default async function Loading({ params, searchParams }: any) {
       <div className="mfixed inset-x-0 top-0 h-[3.9rem]">
         <Skeleton className="w-full" />
       </div>
-
-      <div className="flex justify-between items-center mt-[20rem]">
-        <Skeleton className="flex-none w-[400px] h-[300px] rounded-lg" />
-        <Skeleton className="flex-none w-[400px] h-[300px] rounded-lg" />
-      </div>
+      <MaxWidthWrapper>
+        <div className="flex justify-between items-center mt-[30rem]">
+          <Skeleton className="flex-none w-[500px] h-[300px] rounded-lg" />
+          <Skeleton className="flex-none w-[500px] h-[300px] rounded-lg" />
+        </div>
+      </MaxWidthWrapper>
     </div>
   );
 }

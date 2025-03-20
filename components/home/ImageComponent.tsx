@@ -41,7 +41,7 @@ const ImageComponent = ({
           localStorage.setItem("count", JSON.stringify(-1));
         }
       }
-    }, 30000);
+    }, 20000);
 
     return () => {
       clearInterval(intervalId);
@@ -70,11 +70,12 @@ const ImageComponent = ({
     renderedImage = BgIMages.backdrop_path;
   }
 
+  const dispalyImage = renderedImage ?? BaseImageURL.fallback;
   return (
     renderedImage && (
       <Image
         fill
-        src={renderedImage || `${BaseImageURL.fallback}`}
+        src={dispalyImage}
         alt="Home Background image"
         className={cn("object-cover object-center z-0 ", className)}
         quality={90}

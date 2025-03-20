@@ -19,7 +19,7 @@ type ShowCardProps = {
   show?: Movie & Tv;
   className?: string;
   category?: "movie" | "tv";
-  dbShow?: TrendingShow & MongoShow;
+  dbShow?: string;
   index?: number;
   showRating?: boolean;
 };
@@ -36,12 +36,16 @@ const ShowCard = ({
   const seachparams = useSearchParams();
   const isTv = seachparams.get("category") === "tv" || category === "tv";
 
+  // @ts-ignore
+  const parsedDbShow: TrendingShow & MongoShow = dbShow && JSON.parse(dbShow);
+
+  console.log({ parsedDbShow });
   if (dbShow)
     return (
       <Link
         onMouseEnter={() => setOpen(true)}
         onMouseLeave={() => setOpen(false)}
-        href={`${!isTv ? `/movies/${dbShow?.show_id}` : `/tv/${dbShow?.show_id}`}`}
+        href={`${!isTv ? `/movies/${parsedDbShow?.show_id}` : `/tv/${parsedDbShow?.show_id}`}`}
         className={cn(
           "relative  rounded-md overflow-hidden  flex-col gap-2 shadow-sm min-h-[24rem]  border border-transparent ",
           className
@@ -52,7 +56,7 @@ const ShowCard = ({
         </div>
         <div className="absolute z-20 inset-x-0 bottom-0 h-[8rem] bg-gradient-to-t from-black/80 to-transparent pointer-events-none" />
         <Image
-          src={dbShow?.poster_url || `${BaseImageURL.fallback}`}
+          src={parsedDbShow?.poster_url || `${BaseImageURL.fallback}`}
           alt={`${title} poster`}
           className="object-cover transition-all duration-500 hover:scale-[1.1]"
           fill
@@ -62,20 +66,20 @@ const ShowCard = ({
 
         <div className="rounded-b-md absolute bottom-0 inset-x-0 backdrop-blur-md p-4 z-20 ">
           <h2 className="font-semibold text-2xl mb-3 line-clamp-1">
-            {dbShow?.title}
+            {parsedDbShow?.title}
           </h2>
 
           {showRating && (
             <div className="flex flex-wrap gap-6 paragraph  ">
               <Ratings
-                voteAverage={dbShow?.vote_average}
-                voteCount={dbShow?.vote_count}
+                voteAverage={parsedDbShow?.vote_average}
+                voteCount={parsedDbShow?.vote_count}
                 iconSize={20}
               />
 
               <p className="flex gap-2 items-center">
                 <FaDotCircle className="size-[4px]" />{" "}
-                <span>{dbShow?.release_date?.split("-")[0]}</span>
+                <span>{parsedDbShow?.release_date?.split("-")[0]}</span>
               </p>
             </div>
           )}

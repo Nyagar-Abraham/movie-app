@@ -30,9 +30,9 @@ const page = async ({ params }: any) => {
       <ImageComponent show={series} image="backdrop" />
       <div className="absolute inset-x-0 top-0 h-[5rem] bg-gradient-to-b from-black to-transparent pointer-events-none" />
       <div className="absolute inset-y-0 right-0 w-7/12 bg-gradient-to-l from-black/50 via-black/50  to-transparent pointer-events-none" />
-
-      <MaxWidthWrapper className="relative z-30 p-6  mt-[8rem]  grid md:grid-cols-2 gap-8 ">
-        <div className="ml-auto lg:max-w-[30rem] md:max-w-[20rem]">
+      <BackButton className="absolute top-20 left-1 md:hidden" />
+      <MaxWidthWrapper className="relative z-30 px-6 max-md:mt-[12rem] md:mt-[8rem]  grid md:grid-cols-2 gap-8 items-stretch  md:min-h-[50rem]">
+        <div className="ml-auto lg:max-w-[30rem]  md:max-w-[20rem] md:col-span-1 md:col-start-2 self-end  ">
           <ShowsDetailsCard
             // @ts-ignore
             mongoShow={mongoSeries}
@@ -40,8 +40,8 @@ const page = async ({ params }: any) => {
             category="tv"
           />
         </div>
-        <div className="flex overflow-hidden  flex-col justify-between items-start">
-          <BackButton className="!w-[8rem] mb-2" />
+        <div className="flex overflow-hidden  flex-col justify-between items-start md:row-start-1">
+          <BackButton className="!w-[8rem] mb-2 max-md:hidden" />
           <Videos videos={series?.videos?.results?.slice(0, 5)} />
         </div>
       </MaxWidthWrapper>

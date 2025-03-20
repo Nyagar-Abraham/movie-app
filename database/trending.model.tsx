@@ -32,7 +32,7 @@ const TrendingSchema = new Schema<ITrending>(
 );
 
 // Explicitly create a unique index
-TrendingSchema.index({ searchTerm: 1 }, { unique: true });
+// TrendingSchema.index({ searchTerm: 1 }, { unique: true });
 
 const Trending =
   models?.Trending || model<ITrending>("Trending", TrendingSchema);

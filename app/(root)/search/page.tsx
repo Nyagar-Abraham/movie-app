@@ -5,6 +5,11 @@ import NoResult from "@/components/shared/NoResult";
 import Pagination from "@/components/shared/Pagination";
 import ShowCard from "@/components/shared/ShowCard";
 import { BaseImageURL } from "@/constants/images";
+import {
+  createTrendingShows,
+  getTrending,
+  incrementCount,
+} from "@/lib/actions/trenging.action";
 import { cn } from "@/lib/utils";
 import { getShows } from "@/utils/api";
 import { Movie, TrendingShow, Tv } from "@/utils/interfaces";
@@ -20,9 +25,9 @@ export async function generateMetadata({
 
 export default async function Page({ params, searchParams }: any) {
   const { userId } = auth();
-  const category = searchParams?.category;
+  const category = searchParams?.category || "movie";
   const isTv = category === "tv";
-  const query = searchParams?.query || "";
+  const query: string = searchParams?.query || "";
 
   const target = isTv ? "searchTv" : "searchMovie";
 
@@ -48,10 +53,11 @@ export default async function Page({ params, searchParams }: any) {
   let showData;
 
   if (query) {
-    const firstShow = shows[0];
+    const firstShow: Movie & Tv = shows[0];
+    const category: "tv" | "movie" = isTv ? "tv" : "movie";
     showData = {
       searchTerm: query,
-      show_id: firstShow?.id,
+      show_id: firstShow?.id.toString(),
       user_id: userId!,
       title: isTv ? firstShow?.name : firstShow?.title,
       vote_average: firstShow?.vote_average,
@@ -59,19 +65,33 @@ export default async function Page({ params, searchParams }: any) {
       release_date: isTv ? firstShow?.first_air_date : firstShow?.release_date,
       count: 0,
       poster_url: `${BaseImageURL?.posterBaseUrl}${firstShow?.poster_path}`,
-      category: isTv ? "tv" : "movie",
+      category,
     };
   }
 
   const isValid = shows?.length > 0;
+
+  if (query && isValid && category) {
+    const _id = await getTrending({
+      searchTerm: query,
+      category: category!,
+    });
+
+    if (!_id) {
+      await createTrendingShows({
+        showData: showData!,
+        path: isTv ? "/tv" : "/movies",
+      });
+    } else {
+      await incrementCount({ show_id: _id, path: isTv ? "/tv" : "/movies" });
+    }
+  }
 
   return (
     <MaxWidthWrapper className="mt-[8rem] pb-[6rem]">
       <div className="mt-8 flex items-center flex-wrap justify-between gap-x-3 gap-y-5">
         <Search
           placeholder="Search for TV series..."
-          isValid={isValid}
-          showData={showData as TrendingShow}
           category={isTv ? "tv" : "movie"}
         />
         <div className="flex items-center gap-3">

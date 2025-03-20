@@ -9,7 +9,11 @@ interface createTrendingShowsParams {
   showData: {
     searchTerm: string;
     show_id: string;
+    user_id: string;
     title: string;
+    vote_average: number;
+    vote_count: number;
+    release_date: string;
     count: number;
     poster_url: string;
     category: "movie" | "tv";

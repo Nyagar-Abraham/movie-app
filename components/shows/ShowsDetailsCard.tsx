@@ -46,12 +46,12 @@ const ShowsDetailsCard = ({ show, category, mongoShow }: ShowCardProps) => {
     poster_path,
   } = show;
 
+  console.log({ title });
   const { cast, crew } = credits;
 
   const crewNames = crew.map((catser: CastCrew) => catser.name).slice(0, 2);
   const castArray = cast.slice(0, 9);
 
-  console.log({ crewNames });
   const isTv = category === "tv";
 
   // @ts-ignore
@@ -59,7 +59,6 @@ const ShowsDetailsCard = ({ show, category, mongoShow }: ShowCardProps) => {
   // @ts-ignore
   const mins = (runtime % 60).toString() + "min";
 
-  console.log(`${BaseImageURL.posterBaseUrl}${poster_path}`);
   const showData: ShowData = {
     title: isTv ? name : title,
     show_id: id.toString(),
@@ -70,11 +69,9 @@ const ShowsDetailsCard = ({ show, category, mongoShow }: ShowCardProps) => {
     category,
   };
 
-  console.log({ homepage });
-
   return (
-    <div className="">
-      <h2 className="lg:text-[5rem] sm:text-[3rem]  font-bold text-white">
+    <div className="flex flex-col justify-end ">
+      <h2 className="lg:text-[3rem] line-clamp-2  sm:text-[2rem]  font-bold text-white">
         {isTv ? name : title}
       </h2>
       {crewNames?.length > 0 && (

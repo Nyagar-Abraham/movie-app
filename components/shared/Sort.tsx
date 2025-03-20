@@ -1,6 +1,6 @@
 "use client";
 
-import { formUrlQuery, removeUrlQuery } from "@/lib/utils";
+import { cn, formUrlQuery, removeUrlQuery } from "@/lib/utils";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 import React, { useEffect, useState } from "react";
@@ -36,7 +36,7 @@ const Sort = ({ sorts }: Props) => {
   }, [pathname, active]);
 
   return (
-    <div className="flex gap-3 items-center  ">
+    <div className="flex rounded-full p-1 gap-1  bg-dark90-light10  items-center  ">
       {sorts.map((item) => (
         <button
           onClick={() => {
@@ -47,7 +47,12 @@ const Sort = ({ sorts }: Props) => {
             }
           }}
           key={item}
-          className={`text-sm  bg-dark90-light10 text-light90-dark10 px-3 py-1 rounded-md hover:bg-light-blue ${active === item && "bg-gradient-to-br from-red to-red/70"} `}
+          className={cn(
+            `text-sm text-light90-dark10 px-2 border border-transparent py-1  rounded-full`,
+            {
+              "text-accent-100  border-accent-100": active === item,
+            }
+          )}
         >
           {item}
         </button>

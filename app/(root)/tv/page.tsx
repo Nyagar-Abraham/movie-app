@@ -21,6 +21,7 @@ export default async function Page({ params, searchParams }: any) {
     getShows({
       target: "tv",
       page: searchParams?.page ? +searchParams?.page : 1,
+      sort: searchParams?.sort ? searchParams.sort : null,
     }),
     getAllTrending({ category: "tv" }),
   ]);
@@ -44,7 +45,7 @@ export default async function Page({ params, searchParams }: any) {
             {trending.map((show: TrendingShow & MongoShow, index: number) => (
               <ShowCard
                 key={show._id}
-                dbShow={show}
+                dbShow={JSON.stringify(show)}
                 className="min-w-[20rem]"
                 index={index + 1}
               />

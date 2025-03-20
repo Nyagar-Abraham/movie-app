@@ -73,9 +73,16 @@ interface GetShowProps {
     | TARGET_PROPS["searchTv"];
   show_id?: string;
   page?: number;
+  sort?: "latest" | "oldest";
 }
 
-export async function getShows({ query, target, show_id, page }: GetShowProps) {
+export async function getShows({
+  query,
+  target,
+  show_id,
+  page,
+  sort,
+}: GetShowProps) {
   let endPoint = `${TMDB_CONFIG.BASE_URL}${TARGET_ENDPOINTS[target]}`;
 
   if (target === "movieDetails") endPoint = `${endPoint}${show_id}`;
@@ -95,6 +102,20 @@ export async function getShows({ query, target, show_id, page }: GetShowProps) {
   }
 
   if (page && page > 1) endPoint = `${endPoint}&page=${page}`;
+
+  if (sort && sort === "latest") {
+    if (target === "movies" || target === "searchMovie")
+      endPoint = `${endPoint}&sort_by=release_date.desc`;
+    if (target === "tv" || target === "searchTv")
+      endPoint = `${endPoint}&sort_by=first_air_date.desc`;
+  }
+
+  if (sort && sort === "oldest") {
+    if (target === "movies" || target === "searchMovie")
+      endPoint = `${endPoint}&sort_by=release_date.asc`;
+    if (target === "tv" || target === "searchTv")
+      endPoint = `${endPoint}&sort_by=first_air_date.asc`;
+  }
 
   try {
     const { data } = await axios.get(endPoint, {
