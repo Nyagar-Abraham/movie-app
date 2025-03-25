@@ -1,118 +1,107 @@
-# Frontend Mentor - Entertainment web app solution
+# CineSphere
 
-This is a solution to the [Entertainment web app challenge on Frontend Mentor](https://www.frontendmentor.io/challenges/entertainment-web-app-J-UhgAW1X). Frontend Mentor challenges help you improve your coding skills by building realistic project.
+CineSphere is a dynamic web application for movie and TV series enthusiasts. It leverages the TMDB API to display popular, top-rated, and trending content in an engaging, responsive interface. With secure user authentication and personalized dashboards, CineSphere makes discovering and tracking movies and TV shows an enjoyable experience.
 
-## Table of contents
+---
+
+## Table of Contents
 
 - [Overview](#overview)
-  - [The challenge](#the-challenge)
-  - [Screenshot](#screenshot)
-  - [Links](#links)
-- [My process](#my-process)
-  - [Built with](#built-with)
-  - [What I learned](#what-i-learned)
-  - [Continued development](#continued-development)
-  - [Useful resources](#useful-resources)
-- [Author](#author)
-- [Acknowledgments](#acknowledgments)
+- [Pages](#pages)
+- [Key Features](#key-features)
+- [Technologies](#technologies)
+- [Installation & Setup](#installation--setup)
+- [Usage](#usage)
+- [Authentication](#authentication)
+- [API Integration & Data Storage](#api-integration--data-storage)
+- [Deployment](#deployment)
+- [Contributing](#contributing)
+- [License](#license)
 
-**Note: Delete this note and update the table of contents based on what sections you keep.**
+---
 
 ## Overview
 
-### The challenge
+CineSphere provides a one-stop hub for exploring movies and TV series. Users can easily switch between movies and TV series, filter content, search for specific titles, and view detailed information including trailers, view counts, bookmarks, and favorites.
 
-Users should be able to:
+---
 
-- View the optimal layout for the app depending on their device's screen size
-- See hover states for all interactive elements on the page
-- Navigate between Home, Movies, TV Series, and Bookmarked Shows pages
-- Add/Remove bookmarks from all movies and TV series
-- Search for relevant shows on all pages
-- **Bonus**: Build this project as a full-stack application
-- **Bonus**: If you're building a full-stack app, we provide authentication screen (sign-up/login) designs if you'd like to create an auth flow
+## Pages
 
-### Screenshot
+1. **Home Page**  
+   - Displays the 20 most popular and top-rated movies or TV shows.
+   - The default category is set to **movies**.
+   - Users can switch the category to TV series.
 
-![](./screenshot.jpg)
+2. **Movies Page**  
+   - Shows paginated movie data (20 movies per page).
+   - Includes filtering options based on time (latest or oldest).
 
-Add a screenshot of your solution. The easiest way to do this is to use Firefox to view your project, right-click the page and select "Take a Screenshot". You can choose either a full-height screenshot or a cropped one based on how long the page is. If it's very long, it might be best to crop it.
+3. **Search Page**  
+   - Allows users to search for movies.
+   - For each search term, both the term and its results are stored in a MongoDB database.
+   - This data is later used by an algorithm to display top-searched movies and TV series, sorted by the number of searches.
 
-Alternatively, you can use a tool like [FireShot](https://getfireshot.com/) to take the screenshot. FireShot has a free option, so you don't need to purchase it.
+4. **User Dashboard Page**  
+   - Displays personalized data for the logged-in user.
+   - Includes the user’s favorite shows, bookmarked shows, and search history.
 
-Then crop/optimize/edit your image however you like, add it to your project, and update the file path in the image above.
+5. **Details Page**  
+   - Accessed when a user clicks on a movie or TV series card.
+   - Tracks a “view” and saves this data to the database.
+   - Users can bookmark the content.
+   - If available, a YouTube trailer is displayed.
 
-**Note: Delete this note and the paragraphs above when you add your screenshot. If you prefer not to add a screenshot, feel free to remove this entire section.**
+---
 
-### Links
+## Key Features
 
-- Solution URL: [Add solution URL here](https://your-solution-url.com)
-- Live Site URL: [Add live site URL here](https://your-live-site-url.com)
+- **Dynamic Content Display:**  
+  Switch seamlessly between movies and TV series.
+  
+- **Trending Analytics:**  
+  Search terms are logged in MongoDB, and an algorithm identifies top-searched titles.
 
-## My process
+- **Personalized Dashboard:**  
+  Manage favorites, bookmarks, and search history in one place.
 
-### Built with
+- **Detailed Views:**  
+  Each detail page visit is tracked, contributing to recommendations and analytics.
 
-- Semantic HTML5 markup
-- CSS custom properties
-- Flexbox
-- CSS Grid
-- Mobile-first workflow
-- [React](https://reactjs.org/) - JS library
-- [Next.js](https://nextjs.org/) - React framework
-- [Styled Components](https://styled-components.com/) - For styles
+- **Responsive & Animated UI:**  
+  Built with Tailwind CSS and enhanced with GSAP animations for a smooth user experience.
 
-**Note: These are just examples. Delete this note and replace the list above with your own choices**
+- **Secure User Authentication:**  
+  Ensures that user data (favorites, bookmarks, etc.) is protected.
 
-### What I learned
+---
 
-Use this section to recap over some of your major learnings while working through this project. Writing these out and providing code samples of areas you want to highlight is a great way to reinforce your own knowledge.
+## Technologies
 
-To see how you can add code snippets, see below:
+- **Frontend:**  
+  - HTML  
+  - Tailwind CSS  
+  - React.js  
+  - Next.js  
+  - GSAP
 
-```html
-<h1>Some HTML code I'm proud of</h1>
-```
+- **Backend:**  
+  - MongoDB  
+  - Mongoose  
+  - TypeScript  
+  - Next.js API Routes
 
-```css
-.proud-of-this-css {
-	color: papayawhip;
-}
-```
+- **Authentication:**  
+  - Secure user authentication mechanisms integrated with Next.js.
 
-```js
-const proudOfThisFunc = () => {
-	console.log('🎉');
-};
-```
+---
 
-If you want more help with writing markdown, we'd recommend checking out [The Markdown Guide](https://www.markdownguide.org/) to learn more.
+## Installation & Setup
 
-**Note: Delete this note and the content within this section and replace with your own learnings.**
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/Nyagar-Abraham/movie-app.git
+   cd movie-app
 
-### Continued development
+Check out the live site at [CineSphere Live](https://movie-app-flame-five-31.vercel.app/).
 
-Use this section to outline areas that you want to continue focusing on in future projects. These could be concepts you're still not completely comfortable with or techniques you found useful that you want to refine and perfect.
-
-**Note: Delete this note and the content within this section and replace with your own plans for continued development.**
-
-### Useful resources
-
-- [Example resource 1](https://www.example.com) - This helped me for XYZ reason. I really liked this pattern and will use it going forward.
-- [Example resource 2](https://www.example.com) - This is an amazing article which helped me finally understand XYZ. I'd recommend it to anyone still learning this concept.
-
-**Note: Delete this note and replace the list above with resources that helped you during the challenge. These could come in handy for anyone viewing your solution or for yourself when you look back on this project in the future.**
-
-## Author
-
-- Website - [Add your name here](https://www.your-site.com)
-- Frontend Mentor - [@yourusername](https://www.frontendmentor.io/profile/yourusername)
-- Twitter - [@yourusername](https://www.twitter.com/yourusername)
-
-**Note: Delete this note and add/remove/edit lines above based on what links you'd like to share.**
-
-## Acknowledgments
-
-This is where you can give a hat tip to anyone who helped you out on this project. Perhaps you worked in a team or got some inspiration from someone else's solution. This is the perfect place to give them some credit.
-
-**Note: Delete this note and edit this section's content as necessary. If you completed this challenge by yourself, feel free to delete this section entirely.**
