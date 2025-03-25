@@ -100,8 +100,7 @@ CineSphere provides a one-stop hub for exploring movies and TV series. Users can
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/Nyagar-Abraham/movie-app.git
-   cd movie-app
+   git clone https://github.com/your-username/cinesphere.git
+   cd cinesphere
 
 Check out the live site at [CineSphere Live](https://movie-app-flame-five-31.vercel.app/).
-
