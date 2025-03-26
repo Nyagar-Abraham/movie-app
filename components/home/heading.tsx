@@ -14,7 +14,6 @@ const Heading = ({
   const searchParams = useSearchParams();
   const filter = searchParams.get("filter");
   const sort = searchParams.get("sort");
-  // if (filter || sort) return null;
 
   return (
     <div>

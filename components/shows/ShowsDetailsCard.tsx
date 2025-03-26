@@ -46,7 +46,6 @@ const ShowsDetailsCard = ({ show, category, mongoShow }: ShowCardProps) => {
     poster_path,
   } = show;
 
-  console.log({ title });
   const { cast, crew } = credits;
 
   const crewNames = crew.map((catser: CastCrew) => catser.name).slice(0, 2);

@@ -25,14 +25,13 @@ const ImageComponent = ({
     if (!popularShows) return;
     const isCount = localStorage.getItem("count");
     if (!isCount) localStorage.setItem("count", JSON.stringify(0));
-    console.log({ isCount });
 
     const intervalId = setInterval(() => {
       const storedCount = localStorage.getItem("count");
-      console.log({ storedCount });
+
       if (storedCount) {
         const newCount = JSON.parse(storedCount) + 1;
-        console.log(newCount);
+
         if (newCount < popularShows?.length) {
           incrementIndex(newCount);
           localStorage.setItem("count", JSON.stringify(newCount));
