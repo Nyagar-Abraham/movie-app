@@ -39,7 +39,6 @@ const ShowCard = ({
   // @ts-ignore
   const parsedDbShow: TrendingShow & MongoShow = dbShow && JSON.parse(dbShow);
 
-  console.log({ parsedDbShow });
   if (dbShow)
     return (
       <Link

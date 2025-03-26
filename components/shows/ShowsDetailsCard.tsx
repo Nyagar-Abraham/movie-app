@@ -137,7 +137,7 @@ const ShowsDetailsCard = ({ show, category, mongoShow }: ShowCardProps) => {
       </div>
 
       <DetailsButtons homepage={homepage} />
-      <Cast casts={castArray} className="mt-5" />
+      <Cast casts={castArray} className="mt-5 hidden md:block" />
     </div>
   );
 };

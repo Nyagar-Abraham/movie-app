@@ -15,13 +15,13 @@ const page = async ({ params }: any) => {
   });
 
   return (
-    <div className="border-t border-dark-200 mt-[3.9rem] mx-auto bg-dark100-light0 h-[calc(100vh+30rem)] hide-scrollbar">
-      <MaxWidthWrapper className="pt-10 mx-auto hide-scrollbar  h-full !px-3 flex flex-col">
+    <div className=" mt-[3.9rem] mx-auto bg-dark100-light0 h-[calc(100vh+30rem)] hide-scrollbar">
+      <MaxWidthWrapper className="pt-10 mx-auto  h-full !px-3 flex flex-col">
         <Heading className="capitalize text-3xl dark:text-white text-black mb-6">
           Welcome {user.username.split(" ")[0]}
         </Heading>
 
-        <div className="mt-4 grid  md:grid-cols-12 md:auto-rows-min gap-4 h-full hide-scrollbar ">
+        <div className="mt-4 grid  max-md:max-w-screen  md:grid-cols-12 md:auto-rows-min gap-4 h-full ">
           {/* Liked Shows - Horizontal Scroll */}
           <div className="md:col-span-9">
             <Heading className="capitalize text-2xl mb-2">Liked Shows</Heading>
@@ -74,7 +74,7 @@ const page = async ({ params }: any) => {
               Bookmarked Shows
             </Heading>
             {saved.length > 0 ? (
-              <div className="grid gap-2  overflow-y-auto hide-scrollbar md:grid-cols-2 lg:grid-cols-3 h-[50rem]">
+              <div className="grid gap-2  overflow-y-auto hide-scrollbar md:grid-cols-2 lg:grid-cols-3 h-fit">
                 {saved.reverse().map((save) => (
                   <ShowCard
                     showRating={false}

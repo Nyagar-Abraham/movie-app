@@ -32,8 +32,6 @@ export default async function Page({ params, searchParams }: any) {
   const isNext = data?.page < data?.total_pages;
   const pages = data?.total_pages;
 
-  console.log({ trending });
-
   return (
     <MaxWidthWrapper className="mt-[8rem] pb-[6rem]">
       <div className=" flex items-center justify-between flex-wrap gap-x-3 gap-y-5">

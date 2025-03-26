@@ -46,19 +46,27 @@ export default async function Home({ params, searchParams }: any) {
         <ImageComponent popularShows={popularShows} image="backdrop" />
         <div className="absolute inset-x-0 top-0 h-[5rem] bg-gradient-to-b from-black to-transparent pointer-events-none" />
         <div className="absolute inset-x-0 bottom-0 h-[25rem] bg-gradient-to-t from-black to-transparent pointer-events-none" />
-        <SelectCategory className="mt-[5rem]" />
-        <MaxWidthWrapper className="relative z-30 p-6  mt-[32rem] grid md:grid-cols-2 gap-8 ">
-          <HomePageDescription popularShows={popularShows} />
-          <div className="relative">
-            <ImageComponent
-              popularShows={popularShows}
-              image="poster"
-              className="rounded-md opacity-[0.6]
+
+        <MaxWidthWrapper
+          className="relative h-full  z-30   p-6 flex flex-col justify-between
+
+          "
+        >
+          <SelectCategory className="mt-[5rem]" />
+          <div className=" grid md:grid-cols-2 gap-8 ">
+            <HomePageDescription popularShows={popularShows} />
+            <div className="relative">
+              <ImageComponent
+                popularShows={popularShows}
+                image="poster"
+                className="rounded-md opacity-[0.6]
       "
-            />
+              />
+            </div>
           </div>
         </MaxWidthWrapper>
       </section>
+      {/* section 2 */}
       <section className="min-h-svh py-10 border border-transparent">
         <MaxWidthWrapper className="   ">
           <div className="grid grid-cols-1  md:grid-cols-2 gap-8">

@@ -13,15 +13,19 @@ const Cast = ({ casts, className }: CastProps) => {
   return (
     <div className={cn("  w-full ", className)}>
       <h2 className="font-semibold text-2xl"> Actors</h2>
-      <div className="flex mt-3 items-center gap-3 overflow-scroll hide-scrollbar  ">
+      <div className="flex mt-3 items-center gap-2  overflow-scroll hide-scrollbar  ">
         {casts.map((cast) => (
-          <div className="min-w-[6rem]  " key={cast.id}>
+          <div className="min-w-[5rem] " key={cast.id}>
             <Image
-              src={`${BaseImageURL.backdropBaseUrl}${cast.profile_path}`}
+              src={
+                cast?.profile_path
+                  ? `${BaseImageURL.backdropBaseUrl}${cast.profile_path}`
+                  : `${BaseImageURL.fallback}`
+              }
               alt="logo"
               width={50}
               height={50}
-              className="object-cover rounded-full mx-auto"
+              className="object-cover rounded-full aspect-square mx-auto"
             />
             <p className="text-xs mt-3 line-clamp-1 text-dark-200">
               {cast.name}

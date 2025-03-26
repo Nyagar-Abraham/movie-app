@@ -28,25 +28,29 @@ CineSphere provides a one-stop hub for exploring movies and TV series. Users can
 
 ## Pages
 
-1. **Home Page**  
+1. **Home Page**
+
    - Displays the 20 most popular and top-rated movies or TV shows.
    - The default category is set to **movies**.
    - Users can switch the category to TV series.
 
-2. **Movies Page**  
+2. **Movies Page**
+
    - Shows paginated movie data (20 movies per page).
    - Includes filtering options based on time (latest or oldest).
 
-3. **Search Page**  
+3. **Search Page**
+
    - Allows users to search for movies.
    - For each search term, both the term and its results are stored in a MongoDB database.
    - This data is later used by an algorithm to display top-searched movies and TV series, sorted by the number of searches.
 
-4. **User Dashboard Page**  
+4. **User Dashboard Page**
+
    - Displays personalized data for the logged-in user.
    - Includes the user’s favorite shows, bookmarked shows, and search history.
 
-5. **Details Page**  
+5. **Details Page**
    - Accessed when a user clicks on a movie or TV series card.
    - Tracks a “view” and saves this data to the database.
    - Users can bookmark the content.
@@ -58,7 +62,6 @@ CineSphere provides a one-stop hub for exploring movies and TV series. Users can
 
 - **Dynamic Content Display:**  
   Switch seamlessly between movies and TV series.
-  
 - **Trending Analytics:**  
   Search terms are logged in MongoDB, and an algorithm identifies top-searched titles.
 
@@ -78,20 +81,22 @@ CineSphere provides a one-stop hub for exploring movies and TV series. Users can
 
 ## Technologies
 
-- **Frontend:**  
-  - HTML  
-  - Tailwind CSS  
-  - React.js  
-  - Next.js  
+- **Frontend:**
+
+  - HTML
+  - Tailwind CSS
+  - React.js
+  - Next.js
   - GSAP
 
-- **Backend:**  
-  - MongoDB  
-  - Mongoose  
-  - TypeScript  
+- **Backend:**
+
+  - MongoDB
+  - Mongoose
+  - TypeScript
   - Next.js API Routes
 
-- **Authentication:**  
+- **Authentication:**
   - Secure user authentication mechanisms integrated with Next.js.
 
 ---
@@ -102,5 +107,6 @@ CineSphere provides a one-stop hub for exploring movies and TV series. Users can
    ```bash
    git clone https://github.com/Nyagar-Abraham/movie-app.git
    cd movie-app
+   ```
 
 Check out the live site at [CineSphere Live](https://movie-app-flame-five-31.vercel.app/).
