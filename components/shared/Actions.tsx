@@ -50,7 +50,7 @@ const Actions = ({
       let id;
       let fielToAdd;
       //if it doesn1t exist, create it
-      console.log(!_id, "show_id");
+
       if (!_id) {
         if (field === "saved") fielToAdd = { saved: [userId] };
         if (field === "favorites") fielToAdd = { favorites: [userId] };
@@ -135,7 +135,6 @@ const Actions = ({
 
           if (!_id) throw new Error("Failed to create show");
 
-          console.log(1, _id);
           await updateShowMetrics({
             _id,
             user_id: userId,
@@ -143,7 +142,6 @@ const Actions = ({
             action: "add",
             path: pathname,
           });
-          console.log(2, _id);
         } else {
           await updateShowMetrics({
             _id,

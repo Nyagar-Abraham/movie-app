@@ -64,7 +64,7 @@ export async function createShow(params: createShowparams) {
     if (!show) {
       throw new Error("show not created");
     }
-    console.log("pppp", { show });
+
     revalidatePath(path);
     return show._id.toString();
   } catch (error) {
@@ -87,8 +87,6 @@ export async function updateShowMetrics(params: updateMetricsParams) {
     const show = await ShowTv.findByIdAndUpdate(_id, updateQuery, {
       new: true,
     });
-
-    console.log({ show });
 
     revalidatePath(path);
     return show._id.toString();
