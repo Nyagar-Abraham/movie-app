@@ -21,7 +21,7 @@ const page = async ({ params }: any) => {
           Welcome {user.username.split(" ")[0]}
         </Heading>
 
-        <div className="mt-4 grid  max-md:max-w-screen  md:grid-cols-12 md:auto-rows-min gap-4 h-full ">
+        <div className="mt-4 grid  max-md:max-w-screen  md:grid-cols-12 md:auto-rows-min gap-4 h-full  ">
           {/* Liked Shows - Horizontal Scroll */}
           <div className="md:col-span-9">
             <Heading className="capitalize text-2xl mb-2">Liked Shows</Heading>
@@ -69,7 +69,7 @@ const page = async ({ params }: any) => {
           </div>
 
           {/* Bookmarked Shows - Scrollable */}
-          <div className="md:col-span-9  w-full ">
+          <div className="md:col-span-9   w-full ">
             <Heading className="capitalize text-2xl mb-2">
               Bookmarked Shows
             </Heading>
