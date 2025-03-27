@@ -83,7 +83,7 @@ export async function updateShowMetrics(params: updateMetricsParams) {
 
     if (action === "add") updateQuery = { $addToSet: { [field]: user_id } };
     if (action === "remove") updateQuery = { $pull: { [field]: user_id } };
-    console.log("query", updateQuery);
+
     const show = await ShowTv.findByIdAndUpdate(_id, updateQuery, {
       new: true,
     });

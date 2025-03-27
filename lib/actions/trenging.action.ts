@@ -51,8 +51,6 @@ export async function createTrendingShows(params: createTrendingShowsParams) {
     await session.commitTransaction(); // Commit the transaction
     session.endSession();
 
-    console.log("created trending", updatedTrending);
-
     revalidatePath(path);
     return updatedTrending._id.toString();
   } catch (error) {
@@ -101,7 +99,6 @@ export async function incrementCount({
     );
 
     revalidatePath(path);
-    console.log("incremented count", trending);
   } catch (error) {
     console.log(error);
     throw error;

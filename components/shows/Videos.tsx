@@ -1,7 +1,5 @@
 "use client";
 
-import Video from "next-video";
-import getStarted from "/videos/get-started.mp4";
 import { Video as VideoType } from "@/utils/interfaces";
 import YouTube, { YouTubeProps } from "react-youtube";
 

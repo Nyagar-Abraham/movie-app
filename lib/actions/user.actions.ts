@@ -8,7 +8,6 @@ import {
 import { revalidatePath } from "next/cache";
 import { FilterQuery } from "mongoose";
 import User from "@/database/user.model";
-import Interaction from "@/database/interactions.model";
 
 export async function createUser(user: createUserParams) {
   try {
@@ -77,9 +76,6 @@ export async function deleteUser(params: deleteUserParams) {
     if (!user) {
       return console.log("user not found");
     }
-
-    //TODO:interactions
-    await Interaction.deleteMany({ user: user._id });
   } catch (error) {
     console.log(error);
     throw error;
